@@ -1,8 +1,8 @@
 package com.magneto.his.service.impl;
 
 import com.magneto.his.domain.Employee;
-import com.magneto.his.domain.TempEmp_HisSystem;
-import com.magneto.his.domain.TempEmp_dept;
+import com.magneto.his.domain.His_System;
+import com.magneto.his.domain.Dept;
 import com.magneto.his.mapper.EmpMapper;
 import com.magneto.his.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
-    public List<TempEmp_HisSystem> selectHisSystem(String username) {
-        List<TempEmp_HisSystem> systemList = empMapper.selectSystem(username);
+    public List<His_System> selectHisSystem(String username) {
+        List<His_System> systemList = empMapper.selectSystem(username);
         return systemList;
     }
 
     @Override
-    public List<TempEmp_dept> selectDept(String username ,Integer his_system_id) {
-        List<TempEmp_dept> deptList = empMapper.selectDept(username,his_system_id);
+    public List<Dept> selectDept(String username , Integer his_system_id) {
+        List<Dept> deptList = empMapper.selectDept(username,his_system_id);
         return deptList;
     }
 

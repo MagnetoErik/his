@@ -1,9 +1,9 @@
 package com.magneto.his.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.magneto.his.domain.TempEmp_HisSystem;
+import com.magneto.his.domain.His_System;
 import com.magneto.his.domain.Employee;
-import com.magneto.his.domain.TempEmp_dept;
+import com.magneto.his.domain.Dept;
 import com.magneto.his.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,14 +38,14 @@ public class EmpController {
     @PostMapping(value = "/selectHisSystem",produces="text/html")
     @ResponseBody
     public String selectHisSystem(String username){
-        List<TempEmp_HisSystem> hisSystemList = empService.selectHisSystem(username);
+        List<His_System> hisSystemList = empService.selectHisSystem(username);
         return JSON.toJSONString(hisSystemList);
     }
 
     @PostMapping(value = "/selectDept",produces="text/html")
     @ResponseBody
     public String selectDept(String username ,Integer his_system_id){
-        List<TempEmp_dept> deptList = empService.selectDept(username,his_system_id);
+        List<Dept> deptList = empService.selectDept(username,his_system_id);
         return JSON.toJSONString(deptList);
     }
 

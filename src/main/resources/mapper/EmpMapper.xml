@@ -8,11 +8,11 @@
       select * from employee where username = #{username} and password = #{password}
     </select>
 
-    <select id="selectSystem" resultType="com.magneto.his.domain.TempEmp_HisSystem">
+    <select id="selectSystem" resultType="com.magneto.his.domain.His_System">
       select his_system_id,fun_getHisSystemName(his_system_id) as his_system_name from employee_his_system where emp_username = #{username}
     </select>
 
-    <select id="selectDept" resultType="com.magneto.his.domain.TempEmp_dept">
+    <select id="selectDept" resultType="com.magneto.his.domain.Dept">
       select b.dept_id,b.dept_name from employee_dept a left join dept b on a.dept_id = b.dept_id where emp_username = #{username} and  flag in (select deptFlag from his_system where his_system_id = #{his_system_id})
     </select>
 

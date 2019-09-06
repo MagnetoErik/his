@@ -3,7 +3,7 @@ package com.magneto.his.domain;
 import lombok.Data;
 
 @Data
-public class TempEmp_HisSystem {
+public class His_System {
     private int his_system_id;
     private String his_system_name;
 }
