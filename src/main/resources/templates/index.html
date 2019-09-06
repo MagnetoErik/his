@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script type="text/javascript" src="/js/jQuery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script>
+        function login() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            $.ajax({
+                type: 'POST',
+                url: '/emp/login',
+                data: {username: username, password: password},
+                success: function (str) {
+                    var jsonStr = JSON.parse(str);
+                    if (jsonStr!=null) {
+                        $("#modelBtn").click();
+                        $.ajax({
+                            type:'POST',
+                            url:'/emp/selectHisSystem',
+                            data:{username:username},
+                            success:function (str) {
+                                var jsonStr = JSON.parse(str);
+                                $("#his_system").empty();
+                                $("#dept").empty();
+                                $("#his_system").append("<option id='delete'>"+"------请选择系统------"+"</option>");
+                                $.each(jsonStr,function (index,element) {
+                                    $("#his_system").append("<option id="+element.his_system_id+">"+element.his_system_name+"</option>");
+                                })
+                            }
+                        })
+                    }
+                    else {
+                        alert("用户名或密码错误");
+                    }
+                }
+            })
+        }
+
+
+        function selectDept(){
+            $("#delete").remove();
+            var his_system_id = $("#his_system option:selected").attr("id");
+            var username = $("#username").val();
+            $.ajax({
+                type:'POST',
+                url:'/emp/selectDept',
+                data:{username:username,his_system_id:his_system_id},
+                success:function (str) {
+                    var jsonStr = JSON.parse(str);
+                    $("#dept").empty();
+                    $.each(jsonStr,function (index,element) {
+                        $("#dept").append("<option id="+element.dept_id+">"+element.dept_name+"</option>");
+                    });
+
+                    var dept_id = $("#dept option:selected").attr("id");
+                    $("#inSystem").attr("href",'/pages/forward?his_system_id='+his_system_id +'&dept_id='+dept_id);
+
+
+                }
+            })
+        }
+
+
+
+    </script>
+</head>
+<body style="background: url('/img/hospital.jpg');">
+<div class="col-md-4 col-md-offset-6"
+     style="margin-top: 15%;background: rgba(255,255,255,0.9);padding: 2%;border-radius: 10px;">
+    <form>
+        <div class="form-group">
+            <label>用户名：</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label>密码：</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <input type="button" onclick="login()" class="btn btn-default" value="登录" style="width: 100%;margin-top: 3%;"/>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" id="modelBtn" style="display: none" class="btn btn-primary btn-lg" data-toggle="modal"
+                data-target="#myModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">请选择系统和科室</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-inline">
+                            <select class="form-control" style="width: 49%;" id="his_system" onchange="selectDept()">
+
+                            </select>
+                            <select class="form-control" style="width: 50%;" id="dept">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="inSystem" style="width: 100%" class="btn btn-warning">进入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/bootstrap.css" />
+		<script type="text/javascript" src="../../js/jQuery.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap.js"></script>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+		</style>
+		<script>
+            function home(){
+                $("#main").attr("src",'/mzgh/mzgh_home');
+            }
+
+			function brkdj() {
+                $("#main").attr("src",'/mzgh/mzgh_brkdj');
+			}
+
+			function mzghdj() {
+                $("#main").attr("src",'/mzgh/mzgh_mzghdj');
+			}
+
+			function mzsf() {
+                $("#main").attr("src",'/mzgh/mzgh_mzsf');
+			}
+
+			window.onload = function (){
+                $.ajax({
+                    type:'get',
+                    url:'/pages/getSession',
+                    success:function (str) {
+                        var jsonStr = JSON.parse(str);
+                        $("#loginName").html("欢迎  "+jsonStr.emp.name+"<span class='caret'></span>");
+                    }
+                })
+            }
+		</script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#" onclick="home()">医院信息系统</a>
+				</div>
+				<ul class="nav navbar-nav" style="margin-left: 1.25rem;">
+					<li><a href="#" onclick="brkdj()">病人卡登记</a></li>
+					<li><a href="#" onclick="mzghdj()">门诊挂号登记</a></li>
+					<li><a href="#" onclick="mzsf()">门诊收费</a></li>
+					<li class=" dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">报表统计
+								<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">门诊医生收入统计</a></li>
+								<li><a href="#">门诊科室收入统计</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#">挂号人次统计</a></li>
+							</ul>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="loginName">
+							<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">修改信息</a></li>
+							<li role="separator" class="divider"></li>
+                            <li><a href="#">切换系统</a></li>
+                            <li><a href="#">切换科室</a></li>
+                            <li><a href="#">切换账号</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.container-fluid -->
+		</nav>
+		<iframe id="main" src="/mzgh/mzgh_home" style="width: 100%;" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+	</body>
+</html>
