@@ -3,6 +3,7 @@ package com.magneto.his.service.impl;
 import com.magneto.his.domain.Employee;
 import com.magneto.his.domain.His_System;
 import com.magneto.his.domain.Dept;
+import com.magneto.his.domain.SelectByParamsPOJO;
 import com.magneto.his.mapper.EmpMapper;
 import com.magneto.his.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,8 @@ import java.util.List;
 @Service
 public class EmpServiceImpl implements EmpService {
 
-    private final EmpMapper empMapper;
-
     @Autowired
-    public EmpServiceImpl(EmpMapper empMapper) {
-        this.empMapper = empMapper;
-    }
-
+    private EmpMapper empMapper;
 
     @Override
     public Employee login(Employee employee) {
@@ -37,6 +33,8 @@ public class EmpServiceImpl implements EmpService {
         List<Dept> deptList = empMapper.selectDept(username,his_system_id);
         return deptList;
     }
+
+
 
 
 }

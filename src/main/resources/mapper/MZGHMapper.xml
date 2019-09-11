@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.magneto.his.mapper.MZGHMapper">
+    <insert id="insertBRXX">
+        insert into yy_brxx values (default ,#{brxx_name},#{brxx_sex},#{brxx_phone},#{brxx_birth})
+    </insert>
+
+    <select id="selectBRXX" resultType="com.magneto.his.domain.YY_BRXX">
+        select * from yy_brxx
+    </select>
+
+    <select id="getCardCode" resultType="java.lang.Integer">
+      select max(CardCode) from yy_kdjb
+    </select>
+
+    
+    
+    <resultMap id="brxxMap" type="com.magneto.his.domain.YY_BRXX">
+        <result property="brxx_name" column="brxx_name"></result>
+        <result property="brxx_sex" column="brxx_sex"></result>
+        <result property="brxx_phone" column="brxx_phone"></result>
+        <result property="brxx_birth" column="brxx_birth"></result>
+        <association property="yy_kdjb" javaType="com.magneto.his.domain.YY_KDJB">
+            <id property="cardCode" column="cardcode"></id>
+            <result property="registrationTime" column="registrationTime"></result>
+        </association>
+    </resultMap>
+    <select id="getCardList" resultMap="brxxMap">
+      select cardCode,brxx_name,brxx_sex,brxx_phone,brxx_birth,registrationTime from yy_brxx a left join yy_kdjb b on a.brxx_id = b.brxx_id
+    </select>
+
+    <insert id="insert">
+      insert into yy_brxx values(default ,#{brxx_name} ,#{brxx_sex} ,#{brxx_phone},now())
+    </insert>
+
+    <select id="selectByParams" resultMap="brxxMap">
+      select cardCode,brxx_name,brxx_sex,brxx_phone,brxx_birth,registrationTime from yy_brxx a join yy_kdjb b on a.brxx_id = b.brxx_id
+      <where>
+          <if test="Brxx_Card != null and Brxx_Card != ''">
+              and cardCode like concat("%",#{Brxx_Card} ,"%")
+          </if>
+          <if test="Brxx_Name != null and Brxx_Name != ''">
+              and brxx_name like concat("%",#{Brxx_Name} ,"%")
+          </if>
+          <if test="Brxx_Phone != null and Brxx_Phone != ''">
+              and Brxx_Phone like concat("%",#{Brxx_Phone} ,"%")
+          </if>
+          <if test="Card_End_registrationTime != null and Card_End_registrationTime != '' and Card_Start_registrationTime != null and Card_Start_registrationTime != '' ">
+              and registrationTime between #{Card_Start_registrationTime} and #{Card_End_registrationTime}
+          </if>
+          <if test="Brxx_End_Birth != null and Brxx_End_Birth != '' and Brxx_Start_Birth != null and Brxx_Start_Birth != '' ">
+              and brxx_birth between #{Brxx_Start_Birth} and #{Brxx_End_Birth}
+          </if>
+      </where>
+    </select>
+
+
+</mapper>

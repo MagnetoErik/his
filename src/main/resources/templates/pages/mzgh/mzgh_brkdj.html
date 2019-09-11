@@ -1,176 +1,262 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="../../css/bootstrap.css"/>
-    <script type="text/javascript" src="../../js/jQuery.js"></script>
-    <script type="text/javascript" src="../../js/bootstrap.js"></script>
-</head>
-<div style="height: 115px;margin-top: -25px">
-    <form class="form-inline" style="margin-bottom: 2%">
-        <div class="col-md-10">
-            <div class="form-group">
-                <label>卡号：</label>
-                <input type="number" class="form-control" id="Brxx_Card">
-            </div>
-            <div class="form-group">
-                <label>姓名：</label>
-                <input type="text" class="form-control" id="Brxx_Name">
-            </div>
-            <div class="form-group">
-                <label>电话：</label>
-                <input type="tel" class="form-control" id="Brxx_Phone">
-            </div>
-        </div>
-        <div class="col-md-10" style="margin-top: 1%;">
-            <div class="form-group">
-                <label>出生日期&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                <input type="date" class="form-control" id="Brxx_Start_Birth">
-                到
-                <input type="date" class="form-control" id="Brxx_End_Birth">
-            </div>
-            <div class="form-group">
-                <label>卡登记时间</label>
-                <input type="date" class="form-control" id="Card_Start_registrationTime">
-                到
-                <input type="date" class="form-control" id="Card_End_registrationTime">
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <input type="button" class="btn btn-default" value="查询"/>
-                </div>
-                <!-- Button trigger modal -->
-                <button type="button" id="modelBtn" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
-                    新增
-                </button>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">病人卡登记</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group col-md-12 col-md-offset-1" style="margin-top: 1%;margin-bottom: 1%;">
-                            <label class="col-md-3" style="margin-top: 7px;">卡号：</label>
-                            <input class="col-md-8 form-control" style="width: 65%;margin-left: -8%;" type="text"
-                                   readonly="readonly"/>
-                        </div>
-                        <div class="form-group col-md-12 col-md-offset-1" style="margin-top: 1%;margin-bottom: 1%;">
-                            <label class="col-md-3" style="margin-top: 7px;">姓名：</label>
-                            <input class="col-md-8 form-control" style="width: 65%;margin-left: -8%;" type="text"/>
-                        </div>
-                        <div class="form-group col-md-12 col-md-offset-1" style="margin-top: 1%;margin-bottom: 1%;">
-                            <label class="col-md-3" style="margin-top: 7px;">联系电话：</label>
-                            <input class="col-md-8 form-control" style="width: 65%;margin-left: -8%;" type="tel"/>
-                        </div>
-                        <div class="form-group col-md-12 col-md-offset-1" style="margin-top: 1%;margin-bottom: 1%;">
-                            <label class="col-md-3" style="margin-top: 7px;">出生日期：</label>
-                            <input class="col-md-8 form-control" style="width: 65%;margin-left: -8%;" type="date"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="margin-top: 10%;">
-                        <a href="#" id="inSystem" style="width: 49%" class="btn btn-primary">登记</a>
-                        <button type="reset" style="width: 49%" class="btn btn-warning">重置</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<div>
-    <table class="table" align="center">
-        <tr align="center">
-            <td>卡号</td>
-            <td>姓名</td>
-            <td>性别</td>
-            <td>联系电话</td>
-            <td>出生日期</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-        <tr align="center">
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-            <td>11</td>
-        </tr>
-    </table>
-</div>
-<div class="col-md-offset-5">
-    <button class="btn btn-default">首页</button>
-    <button class="btn btn-default">上一页</button>
-    10/100
-    <button class="btn btn-default">下一页</button>
-    <button class="btn btn-default">尾页</button>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="../../css/bootstrap.css"/>
+        <script type="text/javascript" src="../../js/jQuery.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.js"></script>
+        <script type="text/javascript" src="../../js/Vue.js"></script>
+        <script type="text/javascript" src="../../js/axios.js"></script>
+        <script>
+            function getCardCode() {
+                $.ajax({
+                    type: 'get',
+                    url: '/getCardCode',
+                    success: function (str) {
+                        var jsonStr = JSON.parse(str);
+                        document.getElementById("cardCode").value = jsonStr;
+                    }
+                })
+            }
 
-</div>
-</body>
-</html>
+            function inSystem() {
+                var cardCode = $("#cardCode").val();
+                var brxx_name = $("#brxx_name1").val();
+                var brxx_phone = $("#brxx_phone1").val();
+                var brxx_birth = $("#brxx_birth").val();
+                var brxx_sex = $('input[name="sex"]:checked').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/brkdj',
+                    data: {
+                        cardCode: cardCode,
+                        brxx_name: brxx_name,
+                        brxx_phone: brxx_phone,
+                        brxx_birth: brxx_birth,
+                        brxx_sex: brxx_sex
+                    },
+                    success: function (str) {
+                        var jsonStr = JSON.parse(str);
+                        if (jsonStr == 1) {
+                            alert("诊疗卡登记成功!");
+                            window.location.href = "/mzgh/mzgh_mzghdj";
+                        }
+                        else {
+                            alert("系统错误！请联系管理员！");
+                        }
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body>
+    <div id="main">
+        <div style="height: 115px;margin-top: -25px">
+            <form class="form-inline" style="margin-bottom: 2%">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>卡号：</label>
+                        <input type="number" class="form-control" v-model="Brxx_Card" id="Brxx_Card" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>姓名：</label>
+                        <input type="text" class="form-control" v-model="Brxx_Name" id="Brxx_Name">
+                    </div>
+                    <div class="form-group">
+                        <label>电话：</label>
+                        <input type="tel" class="form-control" v-model="Brxx_Phone" id="Brxx_Phone">
+                    </div>
+                </div>
+                <div class="col-md-10" style="margin-top: 1%;">
+                    <div class="form-group">
+                        <label>出生日期&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                        <input type="date" class="form-control" v-model="Brxx_Start_Birth" id="Brxx_Start_Birth">
+                        到
+                        <input type="date" class="form-control" v-model="Brxx_End_Birth" id="Brxx_End_Birth">
+                    </div>
+                    <div class="form-group">
+                        <label>卡登记时间</label>
+                        <input type="date" class="form-control" v-model="Card_Start_registrationTime" id="Card_Start_registrationTime">
+                        到
+                        <input type="date" class="form-control" v-model="Card_End_registrationTime" id="Card_End_registrationTime">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="button" @click="selectByParams()" class="btn btn-default" value="查询"/>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button onclick="getCardCode()" type="button" id="modelBtn" class="btn btn-warning"
+                                data-toggle="modal"
+                                data-target="#myModal">
+                            新增
+                        </button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">病人卡登记</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group col-md-12 col-md-offset-1"
+                                     style="margin-top: 1%;margin-bottom: 1%;">
+                                    <label class="col-md-3" style="margin-top: 7px;">卡号：</label>
+                                    <input id="cardCode" class="col-md-8 form-control"
+                                           style="width: 65%;margin-left: -8%;"
+                                           type="text"
+                                           readonly="readonly"/>
+                                </div>
+                                <div class="form-group col-md-12 col-md-offset-1"
+                                     style="margin-top: 1%;margin-bottom: 1%;">
+                                    <label class="col-md-3" style="margin-top: 7px;">姓名：</label>
+                                    <input id="brxx_name1" class="col-md-8 form-control"
+                                           style="width: 65%;margin-left: -8%;"
+                                           type="text"/>
+                                </div>
+                                <div class="form-group col-md-12 col-md-offset-1"
+                                     style="margin-top: 1%;margin-bottom: 1%;">
+                                    <label class="col-md-3" style="margin-top: 7px;">性别：</label>
+                                    <div class="col-md-8" style="width: 65%;margin-left: -8%;margin-top: 1%">
+                                        <label class="checkbox-inline">
+                                            <input type="radio" name="sex" value="男"> 男
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="radio" name="sex" value="女"> 女
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-md-offset-1"
+                                     style="margin-top: 1%;margin-bottom: 1%;">
+                                    <label class="col-md-3" style="margin-top: 7px;">联系电话：</label>
+                                    <input id="brxx_phone1" class="col-md-8 form-control"
+                                           style="width: 65%;margin-left: -8%;"
+                                           type="tel"/>
+                                </div>
+                                <div class="form-group col-md-12 col-md-offset-1"
+                                     style="margin-top: 1%;margin-bottom: 1%;">
+                                    <label class="col-md-3" style="margin-top: 7px;">出生日期：</label>
+                                    <input id="brxx_birth" class="col-md-8 form-control"
+                                           style="width: 65%;margin-left: -8%;"
+                                           type="date"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="margin-top: 10%;">
+                                <button type="button" onclick="inSystem()" style="width: 49%" class="btn btn-primary">登记
+                                </button>
+                                <button type="reset" style="width: 49%" class="btn btn-warning">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <table class="table" align="center">
+                <tr align="center">
+                    <td>卡号</td>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>联系电话</td>
+                    <td>出生日期</td>
+                    <td>卡登记日期</td>
+                </tr>
+                <tr align="center" v-for="(temp, index) in cardList">
+                    <td>{{temp.yy_kdjb.cardCode}}</td>
+                    <td>{{temp.brxx_name}}</td>
+                    <td>{{temp.brxx_sex}}</td>
+                    <td>{{temp.brxx_phone}}</td>
+                    <td>{{temp.brxx_birth}}</td>
+                    <td>{{temp.yy_kdjb.registrationTime}}</td>
+                </tr>
+            </table>
+            <div class="col-md-offset-5">
+                <input type="button" class="btn" @click="topPage()" value="首页"/>
+                <input type="button" class="btn" @click="lastPage()" value="上一页"/> <span id="page"></span>
+                <input type="button" class="btn" @click="nextPage()" value="下一页"/>
+                <input type="button" class="btn" @click="finalPage()" value="尾页"/>
+
+            </div>
+        </div>
+    </div>
+
+    </body>
+    </html>
+    <script>
+        var vm = new Vue({
+            el: '#main',
+            data: {
+                cardList: [],
+                pageInfo: [],
+                Brxx_Card:'',
+                Brxx_Name:'',
+                Brxx_Phone:'',
+                Brxx_Start_Birth:'',
+                Brxx_End_Birth:'',
+                Card_Start_registrationTime:'',
+                Card_End_registrationTime:''
+            },
+            methods: {
+                topPage: function () {
+                    if (vm.pageInfo.pageNum != 1) {
+                        this.$options.methods.selectByParams(1);
+                    }
+                },
+                lastPage: function () {
+                    if (vm.pageInfo.pageNum != 1) {
+                        this.$options.methods.selectByParams(vm.pageInfo.pageNum - 1);
+                    }
+                },
+                nextPage: function () {
+                    if (vm.pageInfo.pageNum != vm.pageInfo.pages) {
+                        this.$options.methods.selectByParams(vm.pageInfo.pageNum + 1);
+                    }
+                },
+                finalPage: function () {
+                    if (vm.pageInfo.pageNum != vm.pageInfo.pages) {
+                        this.$options.methods.selectByParams(vm.pageInfo.pages);
+                    }
+                },
+                selectByParams: function (i) {
+                    axios({
+                        method: 'post',
+                        url: '/selectByParams',
+                        params: {
+                            pageNum: i,
+                            Brxx_Card:vm.Brxx_Card,
+                            Brxx_Name:vm.Brxx_Name,
+                            Brxx_Phone:vm.Brxx_Phone,
+                            Brxx_Start_Birth:vm.Brxx_Start_Birth,
+                            Brxx_End_Birth:vm.Brxx_End_Birth,
+                            Card_Start_registrationTime:vm.Card_Start_registrationTime,
+                            Card_End_registrationTime:vm.Card_End_registrationTime
+                        },
+                    }).then(res => {
+                        vm.cardList = res.data.cardList;
+                        vm.pageInfo = res.data.pageInfo;
+                        document.getElementById("page").innerText = vm.pageInfo.pageNum + "/" + vm.pageInfo.pages
+                }).
+                    catch(res => {
+                        console.log(res);
+                })
+                }
+            },
+            created() {
+                axios({
+                    method: 'post',
+                    url: '/getCardList',
+                    params: {pageNum: 1},
+                }).then(res => {
+                    vm.cardList = res.data.cardList;
+                vm.pageInfo = res.data.pageInfo;
+                document.getElementById("page").innerText = vm.pageInfo.pageNum + "/" + vm.pageInfo.pages
+            }).
+                catch(res => {
+                    console.log(res);
+            })
+            }
+        })
+    </script>

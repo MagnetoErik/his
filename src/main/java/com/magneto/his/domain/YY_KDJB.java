@@ -1,18 +1,20 @@
 package com.magneto.his.domain;
 
-import java.util.Date;
+import lombok.Data;
 
+@Data
 public class YY_KDJB {
 
     private int cardCode;
-
-    private Date registrationTime;
+    private int brxx_id;
+    private String registrationTime;
 
     public YY_KDJB() {
     }
 
-    public YY_KDJB(int cardCode, Date registrationTime) {
+    public YY_KDJB(int cardCode, int brxx_id, String registrationTime) {
         this.cardCode = cardCode;
+        this.brxx_id = brxx_id;
         this.registrationTime = registrationTime;
     }
 }
