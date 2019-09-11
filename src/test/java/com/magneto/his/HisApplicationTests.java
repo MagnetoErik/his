@@ -17,7 +17,7 @@ public class HisApplicationTests {
 
 	@Test
 	public void contextLoads() {
-	    for (int i = 501;i<1000;i++){
+	    for (int i = 1001;i<1500;i++){
             mapper.insert(new YY_BRXX(1,"测试病人"+i,"女","14236521496",""));
         }
 
