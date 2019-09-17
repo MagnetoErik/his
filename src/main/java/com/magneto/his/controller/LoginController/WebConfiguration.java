@@ -7,13 +7,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * 登录过滤器控制类
+ */
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
-
-    private static final List<String> EXCLUDE_PATH= Arrays.asList("/emp/login","/pages/index");
 
     @Autowired
     private LoginInterceptor loginInterceptor;

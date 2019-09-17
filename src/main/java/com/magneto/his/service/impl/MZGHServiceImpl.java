@@ -2,6 +2,7 @@ package com.magneto.his.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.magneto.his.domain.MZGH_MZGHDJParamsPOJO;
 import com.magneto.his.domain.SelectByParamsPOJO;
 import com.magneto.his.domain.YY_BRXX;
 import com.magneto.his.mapper.MZGHMapper;
@@ -31,27 +32,20 @@ public class MZGHServiceImpl implements MZGHService {
         return mzghMapper.getCardCode()+1;
     }
 
-    @Override
-    public Map<String , Object> getCardList(Integer pageNum) {
-        PageHelper.startPage(pageNum,10);
-        List<YY_BRXX> cardList = mzghMapper.getCardList();
-        PageInfo pageInfo = new PageInfo(cardList);
-        Map<String , Object> map = new HashMap<>();
-        map.put("cardList",cardList);
-        map.put("pageInfo",pageInfo);
-        return map;
-
-    }
 
     @Override
     public Map<String ,Object> selectByParams(SelectByParamsPOJO params,Integer pageNum) {
-        System.out.println(params);
-        PageHelper.startPage(pageNum,10);
+        PageHelper.startPage(pageNum,12);
         List<YY_BRXX> cardList = mzghMapper.selectByParams(params);
         PageInfo pageInfo = new PageInfo(cardList);
         Map<String ,Object> map = new HashMap<>();
         map.put("cardList",cardList);
         map.put("pageInfo",pageInfo);
         return map;
+    }
+
+    @Override
+    public YY_BRXX selectBrxx(MZGH_MZGHDJParamsPOJO params) {
+        return mzghMapper.selectOneBrxx(params);
     }
 }

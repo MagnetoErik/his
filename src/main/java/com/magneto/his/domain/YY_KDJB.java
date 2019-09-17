@@ -2,6 +2,9 @@ package com.magneto.his.domain;
 
 import lombok.Data;
 
+/**
+ * 病人卡pojo
+ */
 @Data
 public class YY_KDJB {
 

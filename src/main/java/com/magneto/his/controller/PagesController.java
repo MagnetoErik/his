@@ -49,10 +49,8 @@ public class PagesController {
     public String getSession(HttpServletRequest request){
         HttpSession session = request.getSession();
         Object employee = session.getAttribute("emp");
-        Object dept_id = session.getAttribute("dept_id");
         Map<String,Object> map = new HashMap<>();
         map.put("emp",employee);
-        map.put("dept_id",dept_id);
         return JSON.toJSONString(map);
     }
 }

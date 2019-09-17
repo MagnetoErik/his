@@ -2,6 +2,9 @@ package com.magneto.his.domain;
 
 import lombok.Data;
 
+/**
+ * 病人卡登记界面通过以下指定的参数查询病人卡信息
+ */
 @Data
 public class SelectByParamsPOJO {
     String Brxx_Card;

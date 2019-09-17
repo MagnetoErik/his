@@ -27,6 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 
 
+        //判断未登录  如果session为空跳转到登录界面
         HttpSession session = request.getSession();
         Employee emp = (Employee) session.getAttribute("emp");
         if(emp!=null){
