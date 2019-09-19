@@ -2,9 +2,7 @@ package com.magneto.his.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.magneto.his.domain.MZGH_MZGHDJParamsPOJO;
-import com.magneto.his.domain.SelectByParamsPOJO;
-import com.magneto.his.domain.YY_BRXX;
+import com.magneto.his.domain.*;
 import com.magneto.his.mapper.MZGHMapper;
 import com.magneto.his.service.MZGHService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +19,33 @@ public class MZGHServiceImpl implements MZGHService {
     private MZGHMapper mzghMapper;
 
 
+    /**
+     * 病人卡登记
+     * @param brxx 病人信息
+     * @return  返回1或0  1代表登记成功
+     */
     @Override
     public Integer insertBRXX(YY_BRXX brxx) {
         return mzghMapper.insertBRXX(brxx);
     }
 
 
+    /**
+     * 病人卡登记页面新增按钮自动获取卡号
+     * @return 卡号
+     */
     @Override
     public Integer getCardCode() {
         return mzghMapper.getCardCode()+1;
     }
 
 
+    /**
+     * 病人卡登记处通过指定的条件以及分页查询病人卡信息
+     * @param params  指定的条件
+     * @param pageNum  页码
+     * @return 查询病人卡信息
+     */
     @Override
     public Map<String ,Object> selectByParams(SelectByParamsPOJO params,Integer pageNum) {
         PageHelper.startPage(pageNum,12);
@@ -44,8 +57,59 @@ public class MZGHServiceImpl implements MZGHService {
         return map;
     }
 
+    /**
+     * 门诊挂号登记处通过卡号或者身份证号回车检索病人信息
+     * @param params 卡号或者身份证号
+     * @return 病人信息
+     */
     @Override
     public YY_BRXX selectBrxx(MZGH_MZGHDJParamsPOJO params) {
         return mzghMapper.selectOneBrxx(params);
+    }
+
+    /**
+     *门诊挂号登记
+     * @param params
+     * @return
+     */
+    @Override
+    public Integer MZGHDJ(MZGH_MZGHDJInSystemPOJO params) {
+        return mzghMapper.MZGHDJ(params);
+    }
+
+    /**
+     * 挂号登记页面选择挂号级别查询相应的价格
+     * @return  价格
+     */
+    @Override
+    public double getMoney(Integer level) {
+        return mzghMapper.getMoney(level);
+    }
+
+    /**
+     * 门诊划价表登记
+     * @param hjb
+     * @return
+     */
+    @Override
+    public Integer insertHJB(HJBPOJO hjb) {
+        return mzghMapper.insertHJB(hjb);
+    }
+
+    /**
+     *门诊挂号登记界面查询历史挂号信息
+     * @param pageNum  页码
+     * @return 分页信息   历史挂号信息
+     */
+    @Override
+    public Map<String ,Object> getGHXXList(Integer pageNum) {
+        PageHelper.startPage(pageNum,10);
+        List<MZGH_GHDJPOJO> ghxx = mzghMapper.getGHXXList();
+
+        PageInfo pageInfo = new PageInfo(ghxx);
+        Map<String ,Object> map = new HashMap<>();
+        map.put("ghxx",ghxx);
+        map.put("pageInfo",pageInfo);
+        return map;
     }
 }

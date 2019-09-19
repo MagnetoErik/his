@@ -1,15 +1,17 @@
 package com.magneto.his.controller.MZGH_Controller;
 
 import com.alibaba.fastjson.JSON;
-import com.magneto.his.domain.MZGH_MZGHDJParamsPOJO;
-import com.magneto.his.domain.SelectByParamsPOJO;
-import com.magneto.his.domain.YY_BRXX;
+import com.magneto.his.domain.*;
 import com.magneto.his.service.MZGHService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MZGHController {
@@ -63,8 +65,59 @@ public class MZGHController {
     @PostMapping(value = "/selectBrxx",produces="text/html")
     @ResponseBody
     public String selectBrxx(MZGH_MZGHDJParamsPOJO params){
-        System.out.println(params);
         return JSON.toJSONString(mzghService.selectBrxx(params));
+    }
+
+    /**
+     * 门诊挂号登记
+     * @return 1或者0   1代表登记成功
+     */
+    @PostMapping(value = "/MZGHDJ",produces="text/html")
+    @ResponseBody
+    public String MZGHDJ(HttpServletRequest request,MZGH_MZGHDJInSystemPOJO params){
+        HttpSession session = request.getSession();
+        Employee emp = (Employee) session.getAttribute("emp");
+        params.setSfy(Integer.parseInt(emp.getUsername()));
+        return JSON.toJSONString(mzghService.MZGHDJ(params));
+    }
+
+    /**
+     * 挂号登记页面选择挂号级别查询相应的价格
+     * @return
+     */
+    @PostMapping(value = "/getMoney",produces="text/html")
+    @ResponseBody
+    public String getMoney(Integer level){
+        return JSON.toJSONString(mzghService.getMoney(level));
+    }
+
+
+    /**
+     * 门诊划价表登记
+     * @param hjb
+     * @return
+     */
+    @RequestMapping(value = "/insertHJB",produces="text/html")
+    @ResponseBody
+    public String insertHJB(HJBPOJO hjb,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Employee emp =(Employee) session.getAttribute("emp");
+        hjb.setHjy(Integer.parseInt(emp.getUsername()));
+        hjb.setYsdm(Integer.parseInt(emp.getUsername()));
+        return JSON.toJSONString(mzghService.insertHJB(hjb));
+    }
+
+    /**
+     * 获得历史挂号信息
+     * @return 挂号信息
+     */
+    @PostMapping(value = "/getGHXXList",produces="text/html")
+    @ResponseBody
+    public String getGHXXList(Integer pageNum){
+        if(pageNum==null){
+            pageNum=1;
+        }
+        return JSON.toJSONString(mzghService.getGHXXList(pageNum));
     }
 
 

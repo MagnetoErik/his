@@ -1,8 +1,6 @@
 package com.magneto.his.mapper;
 
-import com.magneto.his.domain.MZGH_MZGHDJParamsPOJO;
-import com.magneto.his.domain.SelectByParamsPOJO;
-import com.magneto.his.domain.YY_BRXX;
+import com.magneto.his.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,20 +11,20 @@ public interface MZGHMapper {
 
 
     /**
-     *
-     * @param brxx
+     *病人卡登记
+     * @param brxx 病人信息
      * @return
      */
     Integer insertBRXX(YY_BRXX brxx);
 
     /**
-     * 病人卡登记处自动获取卡号
+     * 病人卡登记页面新增按钮自动获取卡号
      * @return
      */
     Integer getCardCode();
 
     /**
-     *病人卡登记
+     * HisApplicationTests 中批量添加病人卡信息
      * @param brxx 病人信息
      * @return
      */
@@ -46,5 +44,29 @@ public interface MZGHMapper {
      */
     YY_BRXX selectOneBrxx(MZGH_MZGHDJParamsPOJO params);
 
-//    Integer MZGHDJ();
+    /**
+     * 门诊挂号登记
+     * @return
+     */
+    Integer MZGHDJ(MZGH_MZGHDJInSystemPOJO params);
+
+    /**
+     * 挂号登记页面选择挂号级别查询相应的价格
+     * @return  价格
+     */
+    double getMoney(Integer level);
+
+    /**
+     * 门诊划价表登记  (挂号登记)
+     * @param hjb
+     * @return
+     */
+    Integer insertHJB(HJBPOJO hjb);
+
+    /**
+     * 门诊挂号登记界面查询历史挂号信息
+     * @return  历史挂号信息
+     */
+    List<MZGH_GHDJPOJO> getGHXXList();
+
 }

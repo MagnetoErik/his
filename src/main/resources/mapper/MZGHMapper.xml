@@ -30,6 +30,7 @@
       insert into yy_brxx values (default ,#{brxx_name},#{brxx_age} , #{brxx_sex},#{brxx_phone},#{brxx_birth},#{brxx_address},#{brxx_idCard} )
     </insert>
 
+
     <select id="selectByParams" resultMap="brxxMap">
       select cardCode,brxx_name,brxx_sex,brxx_phone,brxx_birth,brxx_address from yy_brxx a join yy_kdjb b on a.brxx_id = b.brxx_id
       <where>
@@ -54,6 +55,7 @@
 
 
     <resultMap id="brxxMap2" type="com.magneto.his.domain.YY_BRXX">
+        <id property="brxx_id" column="brxx_id"></id>
         <result property="brxx_name" column="brxx_name"></result>
         <result property="brxx_sex" column="brxx_sex"></result>
         <result property="brxx_phone" column="brxx_phone"></result>
@@ -64,7 +66,7 @@
         </association>
     </resultMap>
     <select id="selectOneBrxx" resultMap="brxxMap2">
-        select CardCode cardCode,brxx_name,brxx_phone,brxx_sex,brxx_idCard,brxx_age from yy_brxx a left join yy_kdjb b on a.brxx_id = b.brxx_id
+        select CardCode cardCode,a.brxx_id,brxx_name,brxx_phone,brxx_sex,brxx_idCard,brxx_age from yy_brxx a left join yy_kdjb b on a.brxx_id = b.brxx_id
         <where>
             <if test="brxx_idCard != null and brxx_idCard != ''">
                 and brxx_idCard = #{brxx_idCard}
@@ -73,6 +75,25 @@
                 and cardCode = #{cardCode}
             </if>
         </where>
+    </select>
+
+    <select id="MZGHDJ" statementType="CALLABLE" resultType="java.lang.Integer">
+        select fun_mzghdj(#{brxx_id},#{ghks},#{ghjb},#{sfy})
+    </select>
+
+
+    <select id="getMoney" resultType="java.lang.Double">
+        select item_price from jc_hsitem where item_id = #{level}
+    </select>
+
+
+    <insert id="insertHJB">
+        insert into mz_hjb values(default,#{brxx_id},#{ghxx_id},default,#{hjy},#{ysdm},#{ksdm},#{item_id},#{je},1)
+    </insert>
+
+
+    <select id="getGHXXList" resultType="com.magneto.his.domain.MZGH_GHDJPOJO">
+            select c.CardCode cardCode ,b.brxx_name,fun_getDeptName(a.ksdm) deptName,a.je from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id left join yy_kdjb c on a.brxx_id = c.brxx_id order by a.hjsj desc
     </select>
 
 
