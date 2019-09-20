@@ -55,10 +55,18 @@
                     $.each(jsonStr,function (index,element) {
                         $("#dept").append("<option id="+element.dept_id+">"+element.dept_name+"</option>");
                     });
-
                     var dept_id = $("#dept option:selected").attr("id");
                     $("#inSystem").attr("href",'/pages/forward?his_system_id='+his_system_id +'&dept_id='+dept_id);
+                    var deptName = $("#dept").val();
+                    var his_system_name = $("#his_system").val();
+                    $.ajax({
+                        type:'post',
+                        url:'/emp/setSession',
+                        data:{deptName:deptName,dept_id:dept_id,his_system_name:his_system_name,his_system_id:his_system_id},
+                        success:function (str) {
 
+                        }
+                    })
 
                 }
             })
@@ -86,7 +94,6 @@
         <!-- Button trigger modal -->
         <button type="button" id="modelBtn" style="display: none" class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#myModal">
-            Launch demo modal
         </button>
 
         <!-- Modal -->

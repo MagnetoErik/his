@@ -65,8 +65,26 @@ public class EmpController {
     @PostMapping(value = "/selectDept",produces="text/html")
     @ResponseBody
     public String selectDept(String username ,Integer his_system_id){
+
         List<Dept> deptList = empService.selectDept(username,his_system_id);
         return JSON.toJSONString(deptList);
+    }
+
+    /**
+     *  将用户登陆的系统id和科室id存入session
+     * @param his_system_name
+     * @param deptName
+     * @param request
+     */
+    @PostMapping(value = "/setSession",produces="text/html")
+    @ResponseBody
+    public String setSession(String his_system_name,String deptName,Integer his_system_id,Integer dept_id,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("his_system_name",his_system_name);
+        session.setAttribute("deptName",deptName);
+        session.setAttribute("his_system_id",his_system_id);
+        session.setAttribute("dept_id",dept_id);
+        return "1";
     }
 
 

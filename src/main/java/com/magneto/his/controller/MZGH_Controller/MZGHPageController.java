@@ -14,7 +14,7 @@ public class MZGHPageController {
      * @return
      */
     @GetMapping(value = "/mzgh_home", produces = "text/html")
-    public String mzgh_mzgh() {
+    public String mzgh_home() {
         return "/pages/mzgh/mzgh_home";
     }
 

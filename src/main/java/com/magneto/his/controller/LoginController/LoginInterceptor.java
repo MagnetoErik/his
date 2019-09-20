@@ -34,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        response.sendRedirect(request.getContextPath()+"/pages/index");
+        request.getRequestDispatcher("/pages/index").forward(request,response);
 
         return false;
     }

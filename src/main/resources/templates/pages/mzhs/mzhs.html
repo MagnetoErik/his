@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <script type="text/javascript" src="../../js/jQuery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <script>
+        function home(){
+            $("#main").attr("src",'/mzhs/mzhs_home');
+        }
+
+        function cfsh() {
+            $("#main").attr("src",'/mzhs/mzhs_cfsh');
+        }
+
+
+        window.onload = function (){
+            $.ajax({
+                type:'get',
+                url:'/pages/getSession',
+                success:function (str) {
+                    var jsonStr = JSON.parse(str);
+                    document.getElementById("username").value = jsonStr.emp.username;
+                    $("#loginName").html("欢迎  "+jsonStr.emp.name+"&nbsp;&nbsp;当前是<span id='"+jsonStr.his_system_id+"'>"+jsonStr.his_system_name+"</span>&nbsp;&nbsp;<span id='"+jsonStr.dept_id+"'>"+jsonStr.deptName+"</span><span class='caret'></span>");
+                }
+            })
+        };
+
+        function changeSystemAndDept(){
+            $("#modelBtn").click();
+            var username = $("#username").val();
+            $.ajax({
+                type:'POST',
+                url:'/emp/selectHisSystem',
+                data:{username:username},
+                success:function (str) {
+                    var jsonStr = JSON.parse(str);
+                    $("#his_system").empty();
+                    $("#dept").empty();
+                    $("#his_system").append("<option id='delete'>"+"------请选择系统------"+"</option>");
+                    $.each(jsonStr,function (index,element) {
+                        $("#his_system").append("<option id="+element.his_system_id+">"+element.his_system_name+"</option>");
+                    });
+                    selectHisSystem();
+                }
+            })
+
+        }
+
+        function selectHisSystem(){
+            $("#delete").remove();
+            var his_system_id = $("#his_system option:selected").attr("id");
+            var username = $("#username").val();
+            $.ajax({
+                type:'POST',
+                url:'/emp/selectDept',
+                data:{username:username,his_system_id:his_system_id},
+                success:function (str) {
+                    var jsonStr = JSON.parse(str);
+                    $("#dept").empty();
+                    $.each(jsonStr,function (index,element) {
+                        $("#dept").append("<option onclick='selectDept()' id="+element.dept_id+">"+element.dept_name+"</option>");
+                    });
+                }
+            })
+        }
+
+        function inSystem(){
+            var his_system_id = $("#his_system option:selected").attr("id");
+            var dept_id = $("#dept option:selected").attr("id");
+            window.location.href='/pages/forward?his_system_id='+his_system_id +'&dept_id='+dept_id
+            var deptName = $("#dept").val();
+            var his_system_name = $("#his_system").val();
+            $.ajax({
+                type:'post',
+                url:'/emp/setSession',
+                data:{deptName:deptName,dept_id:dept_id,his_system_name:his_system_name,his_system_id:his_system_id}
+            })
+
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" onclick="home()">医院信息系统</a>
+        </div>
+        <ul class="nav navbar-nav" style="margin-left: 1.25rem;">
+            <li><a href="#" onclick="cfsh()">处方审核</a></li>
+            <li class=" dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">报表统计
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">病人处方查询</a></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="hidden" id="username">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="loginName">
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">修改信息</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:void(0)" onclick="changeSystemAndDept()">切换系统和科室</a></li>
+                    <li><a href="#">切换账号</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.container-fluid -->
+</nav>
+<iframe id="main" src="/mzhs/mzhs_home" style="width: 100%;height: 650px" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+<!-- Button trigger modal -->
+<button type="button" id="modelBtn" style="display: none" class="btn btn-primary btn-lg" data-toggle="modal"
+        data-target="#myModal">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">请选择系统和科室</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <select class="form-control" style="width: 49%;" id="his_system" onchange="selectHisSystem()">
+
+                    </select>
+                    <select class="form-control" style="width: 50%;" id="dept">
+
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" onclick="inSystem()" style="width: 100%" class="btn btn-warning">进入</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
