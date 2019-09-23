@@ -2,6 +2,7 @@ package com.magneto.his.service;
 
 import com.magneto.his.domain.*;
 
+import java.util.List;
 import java.util.Map;
 
 public interface MZGHService {
@@ -61,4 +62,10 @@ public interface MZGHService {
      * @return  历史挂号信息
      */
     Map<String ,Object> getGHXXList(Integer pageNum);
+
+    /**
+     * 门诊挂号系统 挂号级别统计
+     * @return
+     */
+    List<MZGH_GHJBTJPOJO> ghjbtj();
 }

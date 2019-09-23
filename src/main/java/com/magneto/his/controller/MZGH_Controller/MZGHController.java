@@ -120,5 +120,15 @@ public class MZGHController {
         return JSON.toJSONString(mzghService.getGHXXList(pageNum));
     }
 
+    /**
+     * 挂号级别统计
+     * @return
+     */
+    @PostMapping(value = "/ghjbtj",produces="text/html")
+    @ResponseBody
+    public String ghjbtj(){
+        return JSON.toJSONString(mzghService.ghjbtj());
+    }
+
 
 }

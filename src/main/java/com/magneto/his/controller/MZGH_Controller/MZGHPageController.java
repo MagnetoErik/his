@@ -45,5 +45,14 @@ public class MZGHPageController {
         return "/pages/mzgh/mzgh_mzsf";
     }
 
+    /**
+     * 跳转到挂号级别统计页面
+     * @return
+     */
+    @GetMapping(value = "/mzgh_ghjbtj", produces = "text/html")
+    public String mzgh_ghjbtj() {
+        return "/pages/mzgh/mzgh_ghjbtj";
+    }
+
 
 }

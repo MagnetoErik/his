@@ -69,4 +69,10 @@ public interface MZGHMapper {
      */
     List<MZGH_GHDJPOJO> getGHXXList();
 
+    /**
+     * 门诊挂号系统 挂号级别统计
+     * @return
+     */
+    List<MZGH_GHJBTJPOJO> ghjbtj();
+
 }

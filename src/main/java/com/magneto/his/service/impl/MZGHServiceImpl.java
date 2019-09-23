@@ -112,4 +112,13 @@ public class MZGHServiceImpl implements MZGHService {
         map.put("pageInfo",pageInfo);
         return map;
     }
+
+    /**
+     * 门诊挂号系统 挂号级别统计
+     * @return
+     */
+    @Override
+    public List<MZGH_GHJBTJPOJO> ghjbtj() {
+        return mzghMapper.ghjbtj();
+    }
 }

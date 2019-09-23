@@ -283,7 +283,7 @@
                                 url: '/insertHJB',
                                 params: {brxx_id: brxx_id, ksdm: dept, item_id: level, je: money1, ghxx_id: str}
                             }).then(function (res) {
-                                if (res.data == 1 && vm.money2 > money1) {
+                                if (res.data == 1 && vm.money2 >= money1) {
                                     vm.money2 = '';
                                     alert("登记成功！");
                                     document.getElementById("cardCode_now").innerText = $("#cardCode").val();
@@ -293,6 +293,10 @@
                                     $("#modelBtn").click();
                                     $("#delete").click();
                                     vm.$options.methods.getData(1);
+                                }
+                                else{
+                                    alert("请输入正确的金额！");
+                                    return;
                                 }
 
                             })

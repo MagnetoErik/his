@@ -96,5 +96,9 @@
             select c.CardCode cardCode ,b.brxx_name,fun_getDeptName(a.ksdm) deptName,a.je from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id left join yy_kdjb c on a.brxx_id = c.brxx_id order by a.hjsj desc
     </select>
 
+    <select id="ghjbtj" resultType="com.magneto.his.domain.MZGH_GHJBTJPOJO">
+      select b.item_name name,count(1) as value from mz_hjb a left join jc_hsitem b on a.item_id = b.item_id where ghbz = 1 GROUP BY b.item_id
+    </select>
+
 
 </mapper>
