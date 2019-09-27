@@ -103,7 +103,7 @@ public class MZGHServiceImpl implements MZGHService {
      */
     @Override
     public Map<String ,Object> getGHXXList(Integer pageNum) {
-        PageHelper.startPage(pageNum,10);
+        PageHelper.startPage(pageNum,8);
         List<MZGH_GHDJPOJO> ghxx = mzghMapper.getGHXXList();
 
         PageInfo pageInfo = new PageInfo(ghxx);

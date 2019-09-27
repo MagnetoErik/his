@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css"/>
+    <script type="text/javascript" src="../../js/jQuery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/Vue.js"></script>
+    <script type="text/javascript" src="../../js/axios.js"></script>
+    <style>
+        #msg tr td {
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        function f1(event) {
+            var e = event || window.event;
+            if (e && e.keyCode == 13) { // enter 键
+                var cardCode = $("#cardCode").val();
+                var brxx_idCard = $("#brxx_idCard").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/selectBrxx',
+                    data: {cardCode: cardCode, brxx_idCard: brxx_idCard},
+                    cache: false,
+                    success: function (str) {
+                        var jsonStr = JSON.parse(str);
+                        document.getElementById("jzbz").value = 1;
+                        document.getElementById("brxx").innerText = "病人信息:      姓名:" + jsonStr.brxx_name + "      性别:" + jsonStr.brxx_sex + "      年龄:" + jsonStr.brxx_age + "岁      联系电话:" + jsonStr.brxx_phone
+
+                    }
+                })
+            }
+        }
+
+        function empty1() {
+            document.getElementById("brxx_idCard").value = "";
+        }
+
+        function empty2() {
+            document.getElementById("cardCode").value = "";
+        }
+
+        function jiezhen() {
+            var jzbz = $("#jzbz").val();
+            if(jzbz==0){
+                alert("还未接诊病人！请在左侧接诊病人后再开立医嘱！");
+                return;
+            }else{
+                $("#modelBtn").click();
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="main">
+    <div style="width: 21%;float: left;">
+        <div style="margin-left:  2%">
+            <label>
+                <font size="+1">病人列表</font>
+            </label>
+        </div>
+        <div style="margin-top: 2%;margin-left: 2%">
+            <div class="form-inline">
+                <label>病人卡号:</label>
+                <input type="text" oninput="empty1()" id="cardCode" class="form-control" onkeypress="f1(event)"/>
+            </div>
+            <div class="form-inline" style="margin-top: 1%;">
+                <label>身份证号:</label>
+                <input type="text" oninput="empty2()" id="brxx_idCard" class="form-control" onkeypress="f1(event)"/>
+            </div>
+        </div>
+        <div style="margin-top: 5%;">
+            <ul class="nav nav-tabs">
+                <li role="presentation" aria-label="Right Align"><a href="#" @click="refresh()">候诊病人列表</a></li>
+            </ul>
+            <div>
+                <div style="height: 200px;overflow :auto;margin-top: 2%;margin: 0px;padding: 0px;">
+                    <table class="table table-hover table-bordered" width="100%" height="190px">
+                        <tr align="center">
+                            <td>挂号序号</td>
+                            <td>姓名</td>
+                            <td>性别</td>
+                            <td>年龄</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin-top: 5%;">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a href="#" @click="now()">就诊病人列表</a></li>
+                        <li role="presentation"><a href="#" @click="finish()">就诊完成列表</a></li>
+                    </ul>
+                </div>
+                <div style="height: 200px;overflow :auto;margin-top: 2%;margin: 0px;padding: 0px;">
+                    <table class="table table-hover table-bordered">
+                        <tr align="center">
+                            <td>接诊医生</td>
+                            <td>姓名</td>
+                            <td>性别</td>
+                            <td>年龄</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                        <tr align="center">
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                            <td>111</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 77%;margin-left: 23%;">
+        <div>
+            <font size="+1" id="brxx">病人信息: </font>
+            <input type="hidden" id="jzbz" value="0">
+        </div>
+        <div style="margin-top: 1%;">
+            <button type="button" class="btn btn-default"  onclick="jiezhen()">
+                新开医嘱（F3）
+            </button>
+            <button type="button" style="display: none" class="btn btn-default" id="modelBtn" data-toggle="modal" data-target="#myModal">
+            </button>
+            <button type="button" class="btn btn-default">发送医嘱（F2）</button>
+            <button type="button" class="btn btn-default">清屏</button>
+        </div>
+        <table id="msg" class="table table-striped table-hover" style="margin-top: 2%">
+            <tr align="center">
+                <td>开嘱时间</td>
+                <td>医嘱内容</td>
+                <td>剂量</td>
+                <td>单位</td>
+                <td>频次</td>
+                <td>用法</td>
+                <td>天数</td>
+                <td>单价</td>
+                <td>总金额</td>
+                <td>操作</td>
+            </tr>
+            <tr align="center">
+                <td>2019-9-27 09:44:45</td>
+                <td>维生素C</td>
+                <td>1</td>
+                <td>片</td>
+                <td>Bid</td>
+                <td>口服</td>
+                <td>5</td>
+                <td>0.013</td>
+                <td>0.005</td>
+                <td>
+                    <button class="btn btn-warning">编辑</button>
+                    <button class="btn btn-danger" style="margin-left: 1%">删除</button>
+                </td>
+            </tr>
+            <tr align="center">
+                <td>2019-9-27 09:44:45</td>
+                <td>维生素C</td>
+                <td>1</td>
+                <td>片</td>
+                <td>Bid</td>
+                <td>口服</td>
+                <td>5</td>
+                <td>0.013</td>
+                <td>0.005</td>
+                <td>
+                    <button class="btn btn-warning">编辑</button>
+                    <button class="btn btn-danger" style="margin-left: 1%">删除</button>
+                </td>
+            </tr>
+        </table>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="width: 1000px;">
+                <div class="modal-content">
+                    <form>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">新开医嘱</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <table class="table table-striped table-hover" width="100%">
+                                <tr align="center">
+                                    <td>开嘱时间</td>
+                                    <td>医嘱内容</td>
+                                    <td>剂量</td>
+                                    <td>单位</td>
+                                    <td>频次</td>
+                                    <td>用法</td>
+                                    <td>天数</td>
+                                    <td>单价</td>
+                                    <td>总金额</td>
+                                </tr>
+                                <tr align="center">
+                                    <td>2019-9-27 09:44:45</td>
+                                    <td style="width: 20%"><input type="text" class="form-control"></td>
+                                    <td style="width: 6%"><input type="tel" class="form-control"></td>
+                                    <td style="width: 8%">
+                                        <select class="form-control">
+                                            <option>g</option>
+                                            <option>ml</option>
+                                            <option>片</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 10%"><input type="text" class="form-control"></td>
+                                    <td style="width: 10%"><input type="text" class="form-control"></td>
+                                    <td style="width: 6%"><input type="tel" class="form-control"></td>
+                                    <td>0.013</td>
+                                    <td>0.005</td>
+                                </tr>
+                                <tr align="center">
+                                    <td>2019-9-27 09:44:45</td>
+                                    <td>维生素C</td>
+                                    <td>1</td>
+                                    <td>片</td>
+                                    <td>Bid</td>
+                                    <td>口服</td>
+                                    <td>5</td>
+                                    <td>0.013</td>
+                                    <td>0.005</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="width: 49%" class="btn btn-primary">插入
+                            </button>
+                            <button type="reset" style="width: 49%" class="btn btn-warning">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: '#main',
+        data: {},
+        methods: {
+            now: function () {
+                alert(1);
+            },
+            finish: function () {
+                alert(2);
+            },
+            refresh: function () {
+                alert(3);
+            }
+
+        }
+    })
+</script>

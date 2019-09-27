@@ -17,4 +17,13 @@ public class MZYSPageController {
         return "/pages/mzys/mzys_home";
     }
 
+    /**
+     * 跳转到医嘱处方
+     * @return
+     */
+    @GetMapping(value = "/mzys_yzcf", produces = "text/html")
+    public String mzys_yzcf() {
+        return "/pages/mzys/mzys_yzcf";
+    }
+
 }

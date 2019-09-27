@@ -18,7 +18,6 @@
                 }
             })
         }
-
         function inSystem() {
             var cardCode = $("#cardCode").val();
             var brxx_name = $("#brxx_name1").val();
@@ -53,14 +52,12 @@
                 }
             })
         }
-
         function getAgeAndBirth() {
             var brxx_idCard = $("#brxx_idCard").val();
             var age = 2019-parseInt(brxx_idCard.substr(6,4));
             document.getElementById("brxx_age").value = age;
             var birth = brxx_idCard.substr(6,4)+"-"+brxx_idCard.substr(10,2)+"-"+brxx_idCard.substr(12,2)
             document.getElementById("brxx_birth").value = birth;
-
         }
     </script>
 </head>
@@ -289,7 +286,7 @@
                 url: '/selectByParams',
                 params: {pageNum: 1},
             }).then(res => {
-            vm.cardList = res.data.cardList;
+                vm.cardList = res.data.cardList;
             vm.pageInfo = res.data.pageInfo;
             document.getElementById("page").innerText = vm.pageInfo.pageNum + "/" + vm.pageInfo.pages
         }).
