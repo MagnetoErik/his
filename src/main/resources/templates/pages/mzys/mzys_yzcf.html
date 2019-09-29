@@ -4,33 +4,44 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../../css/bootstrap.css"/>
+    <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css"/>
     <script type="text/javascript" src="../../js/jQuery.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script type="text/javascript" src="../../js/Vue.js"></script>
     <script type="text/javascript" src="../../js/axios.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-datetimepicker.zh-CN.js"></script>
+
     <style>
         #msg tr td {
             vertical-align: middle;
         }
+
+
     </style>
     <script>
+        var i = 0;
+
         function f1(event) {
             var e = event || window.event;
             if (e && e.keyCode == 13) { // enter 键
                 var cardCode = $("#cardCode").val();
                 var brxx_idCard = $("#brxx_idCard").val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/selectBrxx',
-                    data: {cardCode: cardCode, brxx_idCard: brxx_idCard},
-                    cache: false,
-                    success: function (str) {
-                        var jsonStr = JSON.parse(str);
-                        document.getElementById("jzbz").value = 1;
-                        document.getElementById("brxx").innerText = "病人信息:      姓名:" + jsonStr.brxx_name + "      性别:" + jsonStr.brxx_sex + "      年龄:" + jsonStr.brxx_age + "岁      联系电话:" + jsonStr.brxx_phone
+                if ((cardCode != null && cardCode != "") || (brxx_idCard != null && brxx_idCard != "")) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/selectBrxx',
+                        data: {cardCode: cardCode, brxx_idCard: brxx_idCard},
+                        cache: false,
+                        success: function (str) {
+                            var jsonStr = JSON.parse(str);
+                            document.getElementById("jzbz").value = 1;
+                            document.getElementById("brxx").innerText = "病人信息:      姓名:" + jsonStr.brxx_name + "      性别:" + jsonStr.brxx_sex + "      年龄:" + jsonStr.brxx_age + "岁      联系电话:" + jsonStr.brxx_phone
 
-                    }
-                })
+                        }
+                    })
+                }
+
             }
         }
 
@@ -44,13 +55,83 @@
 
         function jiezhen() {
             var jzbz = $("#jzbz").val();
-            if(jzbz==0){
+            if (jzbz == 0) {
                 alert("还未接诊病人！请在左侧接诊病人后再开立医嘱！");
                 return;
-            }else{
-                $("#modelBtn").click();
+            }
+            else {
+                i++;
+                $("#msg").append("" +
+                    "<tr align='center'>" +
+                        "<td style='width: 17%'>" +
+                            "<input type='text' id='dataTime" + i + "' name='datetimepicker' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 15%'>" +
+                            "<input id='yppm" + i + "' type='text' onfocus='getName()' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 8%'>" +
+                            "<input type='number' min='0' id='ypjl" + i + "' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 7%'>" +
+                            "<input id='ypdw" + i + "' class='form-control' readonly='readonly'>" +
+                        "</td>" +
+                        "<td style='width: 8%'>" +
+                            "<select id='pl" + i + "' class='form-control'>" +
+                                "<option value='1'>Qd</option>" +
+                                "<option value='2'>Bid</option>" +
+                                "<option value='3'>Tid</option>" +
+                            "</select>" +
+                        "</td>" +
+                        "<td style='width: 10%'>" +
+                            "<input type='text' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 8%'>" +
+                            "<input type='number' min='0' id='ts" + i + "' onblur='getMoney(i)' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 8%'>" +
+                            "<input readonly='readonly' id='ypdj" + i + "' class='form-control'>" +
+                        "</td>" +
+                        "<td style='width: 8%'>" +
+                            "<input readonly='readonly' id='sum"+i+"' value='0.05' class='form-control'>" +
+                        "</td>" +
+                        "<td>" +
+                            "<button class='btn btn-primary'>保存</button>" +
+                            "<button class='btn btn-danger' style='margin-left: 1%'>删除</button>" +
+                        "</td>" +
+                    "</tr>");
+                $('#dataTime' + i).datetimepicker({
+                    autoclose: true,   //选择后自动关闭当前时间控件
+                    forceParse: 0,//设置为0，时间不会跳转1899，会显示当前时间。
+                    language: 'zh-CN',//显示中文
+                    format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+                    minView: "0",//设置只显示到月份
+                    initialDate: new Date(),//初始化当前日期
+                    todayBtn: true//显示今日按钮
+                });
+                $('#dataTime' + i).datetimepicker("setDate", new Date());  //设置显示默认当天的时间
             }
         }
+
+
+        function getName() {
+            $("#myModal").modal("show");//打开模态框
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $("#myModal #selectInput").focus();//获取焦点
+            })
+        }
+
+        function getMoney(i) {
+            var ypjl = $("#ypjl"+i).val();
+            var pc = $("#pl"+i).val();
+            var ts = $("#ts"+i).val();
+            var dj = $("#ypdj"+i).val();
+            var sum = ypjl*pc*ts*dj;
+            document.getElementById('sum' + i).value = sum;
+        }
+
+
+
     </script>
 </head>
 <body>
@@ -77,49 +158,20 @@
             </ul>
             <div>
                 <div style="height: 200px;overflow :auto;margin-top: 2%;margin: 0px;padding: 0px;">
-                    <table class="table table-hover table-bordered" width="100%" height="190px">
+                    <table class="table table-hover table-bordered" width="100%">
                         <tr align="center">
                             <td>挂号序号</td>
                             <td>姓名</td>
                             <td>性别</td>
                             <td>年龄</td>
                         </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
+                        <tr align="center" v-for="(bean,index) in waitList" @dblclick='dblClick($event,bean)'>
+                            <td>{{index+1}}</td>
+                            <td>{{bean.brxx_name}}</td>
+                            <td>{{bean.brxx_sex}}</td>
+                            <td>{{bean.brxx_age}}</td>
                         </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
+
                     </table>
                 </div>
                 <div style="margin-top: 5%;">
@@ -136,30 +188,13 @@
                             <td>性别</td>
                             <td>年龄</td>
                         </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
+                        <tr align="center" v-for="(bean,index) in nowList">
+                            <td>{{index+1}}</td>
+                            <td>{{bean.brxx_name}}</td>
+                            <td>{{bean.brxx_sex}}</td>
+                            <td>{{bean.brxx_age}}</td>
                         </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
-                        <tr align="center">
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                            <td>111</td>
-                        </tr>
+
                     </table>
                 </div>
             </div>
@@ -172,10 +207,11 @@
             <input type="hidden" id="jzbz" value="0">
         </div>
         <div style="margin-top: 1%;">
-            <button type="button" class="btn btn-default"  onclick="jiezhen()">
+            <button type="button" class="btn btn-default" onclick="jiezhen()">
                 新开医嘱（F3）
             </button>
-            <button type="button" style="display: none" class="btn btn-default" id="modelBtn" data-toggle="modal" data-target="#myModal">
+            <button type="button" style="display: none" class="btn btn-default" id="modelBtn" data-toggle="modal"
+                    data-target="#myModal">
             </button>
             <button type="button" class="btn btn-default">发送医嘱（F2）</button>
             <button type="button" class="btn btn-default">清屏</button>
@@ -193,36 +229,7 @@
                 <td>总金额</td>
                 <td>操作</td>
             </tr>
-            <tr align="center">
-                <td>2019-9-27 09:44:45</td>
-                <td>维生素C</td>
-                <td>1</td>
-                <td>片</td>
-                <td>Bid</td>
-                <td>口服</td>
-                <td>5</td>
-                <td>0.013</td>
-                <td>0.005</td>
-                <td>
-                    <button class="btn btn-warning">编辑</button>
-                    <button class="btn btn-danger" style="margin-left: 1%">删除</button>
-                </td>
-            </tr>
-            <tr align="center">
-                <td>2019-9-27 09:44:45</td>
-                <td>维生素C</td>
-                <td>1</td>
-                <td>片</td>
-                <td>Bid</td>
-                <td>口服</td>
-                <td>5</td>
-                <td>0.013</td>
-                <td>0.005</td>
-                <td>
-                    <button class="btn btn-warning">编辑</button>
-                    <button class="btn btn-danger" style="margin-left: 1%">删除</button>
-                </td>
-            </tr>
+
         </table>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document" style="width: 1000px;">
@@ -234,46 +241,26 @@
                             <h4 class="modal-title" id="myModalLabel">新开医嘱</h4>
                         </div>
                         <div class="modal-body">
-
+                            <input type="text" autofocus="autofocus" class="form-control" id="selectInput"
+                                   @input="getMsg()" width="100%">
                             <table class="table table-striped table-hover" width="100%">
                                 <tr align="center">
-                                    <td>开嘱时间</td>
                                     <td>医嘱内容</td>
-                                    <td>剂量</td>
-                                    <td>单位</td>
-                                    <td>频次</td>
-                                    <td>用法</td>
-                                    <td>天数</td>
+                                    <td>规格</td>
                                     <td>单价</td>
-                                    <td>总金额</td>
+                                    <td>单位</td>
+                                    <td>库存</td>
+                                    <td>执行科室</td>
+                                    <td>厂家</td>
                                 </tr>
-                                <tr align="center">
-                                    <td>2019-9-27 09:44:45</td>
-                                    <td style="width: 20%"><input type="text" class="form-control"></td>
-                                    <td style="width: 6%"><input type="tel" class="form-control"></td>
-                                    <td style="width: 8%">
-                                        <select class="form-control">
-                                            <option>g</option>
-                                            <option>ml</option>
-                                            <option>片</option>
-                                        </select>
-                                    </td>
-                                    <td style="width: 10%"><input type="text" class="form-control"></td>
-                                    <td style="width: 10%"><input type="text" class="form-control"></td>
-                                    <td style="width: 6%"><input type="tel" class="form-control"></td>
-                                    <td>0.013</td>
-                                    <td>0.005</td>
-                                </tr>
-                                <tr align="center">
-                                    <td>2019-9-27 09:44:45</td>
-                                    <td>维生素C</td>
-                                    <td>1</td>
-                                    <td>片</td>
-                                    <td>Bid</td>
-                                    <td>口服</td>
-                                    <td>5</td>
-                                    <td>0.013</td>
-                                    <td>0.005</td>
+                                <tr align="center" v-for="(bean,index) in YPList" @click='insert($event,bean,index+1)'>
+                                    <td>{{bean.yppm}}</td>
+                                    <td>{{bean.ypgg}}</td>
+                                    <td>{{bean.ypdj}}</td>
+                                    <td>{{bean.ypdw}}</td>
+                                    <td>{{bean.ypkc}}</td>
+                                    <td>{{bean.zxks}}</td>
+                                    <td>{{bean.sccj}}</td>
                                 </tr>
                             </table>
 
@@ -294,7 +281,13 @@
 <script>
     var vm = new Vue({
         el: '#main',
-        data: {},
+        data: {
+            params: '',
+            name: '',
+            YPList: [],
+            waitList:[],
+            nowList:[]
+        },
         methods: {
             now: function () {
                 alert(1);
@@ -304,8 +297,32 @@
             },
             refresh: function () {
                 alert(3);
+            },
+            getMsg: function () {
+                var name = $("#selectInput").val();
+                axios.post('/mzys/getMsg', {param: name}).then(function (res) {
+                    vm.YPList = res.data;
+                })
+            },
+            insert: function ($event, bean) {
+                document.getElementById("ypdw" + i).value = bean.ypdw.toString();
+                document.getElementById("ypdj" + i).value = bean.ypdj.toString();
+                document.getElementById("yppm" + i).value = bean.yppm.toString();
+                document.getElementById("selectInput").value = "";
+                $("#myModal").click();
+            },
+            dblClick: function ($event,bean) {
+                console.log(bean);
+                document.getElementById("brxx").innerText = "病人信息:      姓名:" + bean.brxx_name + "      性别:" + bean.brxx_sex + "      年龄:" + bean.brxx_age + "岁      联系电话:" + bean.brxx_phone
             }
-
+        },
+        created(){
+            axios.post('/mzys/waitList').then(function (res) {
+                vm.waitList = res.data;
+            });
+            axios.post('/mzys/nowList').then(function (res) {
+                vm.nowList = res.data;
+            })
         }
     })
 </script>

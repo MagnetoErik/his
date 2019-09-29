@@ -66,7 +66,7 @@
         </association>
     </resultMap>
     <select id="selectOneBrxx" resultMap="brxxMap2">
-        select CardCode cardCode,a.brxx_id,brxx_name,brxx_phone,brxx_sex,brxx_idCard,brxx_age from yy_brxx a left join yy_kdjb b on a.brxx_id = b.brxx_id
+        select  CardCode cardCode,a.brxx_id,brxx_name,brxx_phone,brxx_sex,brxx_idCard,brxx_age from yy_brxx a left join yy_kdjb b on a.brxx_id = b.brxx_id
         <where>
             <if test="brxx_idCard != null and brxx_idCard != ''">
                 and brxx_idCard = #{brxx_idCard}
@@ -75,6 +75,7 @@
                 and cardCode = #{cardCode}
             </if>
         </where>
+        order by b.registrationTime desc limit 0,1
     </select>
 
     <select id="MZGHDJ" statementType="CALLABLE" resultType="java.lang.Integer">
@@ -88,7 +89,7 @@
 
 
     <insert id="insertHJB">
-        insert into mz_hjb values(default,#{brxx_id},#{ghxx_id},default,#{hjy},#{ysdm},#{ksdm},#{item_id},#{je},1)
+        insert into mz_hjb values(default,#{brxx_id},#{ghxx_id},default,#{hjy},#{ysdm},#{ksdm},#{item_id},#{je},1,0)
     </insert>
 
 

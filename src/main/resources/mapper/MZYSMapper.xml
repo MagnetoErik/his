@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.magneto.his.mapper.MZYSMapper">
+
+    <select id="getMsg" resultType="com.magneto.his.domain.MZYS_SelectMsgReturnPojo">
+        select ggid,yppm,pym,ypgg,ypdj,ypdw,ypkc,fun_getDeptName(zxks) zxks,sccj from yf_ypxx where pym like concat('%',#{name},'%')
+    </select>
+
+
+    <select id="waitList" resultType="com.magneto.his.domain.YY_BRXX">
+        select b.brxx_name,brxx_sex,brxx_age,brxx_phone from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id where ghbz = 1 and ksdm = #{deptId} and brzt = 0
+    </select>
+    <select id="nowList" resultType="com.magneto.his.domain.YY_BRXX">
+        select b.brxx_name,brxx_sex,brxx_age,brxx_phone from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id where ghbz = 1 and ksdm = #{deptId} and brzt = 1
+    </select>
+
+
+</mapper>

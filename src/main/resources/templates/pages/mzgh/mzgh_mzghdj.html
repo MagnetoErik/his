@@ -8,6 +8,11 @@
     <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script type="text/javascript" src="../../js/Vue.js"></script>
     <script type="text/javascript" src="../../js/axios.js"></script>
+    <style>
+        [v-clock]{
+            display:none;
+        }
+    </style>
     <script>
         function f1(event) {
             var e = event || window.event;
@@ -74,7 +79,7 @@
     </script>
 </head>
 <body>
-<div id="main">
+<div id="main" v-clock>
     <form class="form-inline" style="margin-top: 1%;height: 50px;">
         <div class="col-md-7">
             <input type="hidden" id="brxx_id">

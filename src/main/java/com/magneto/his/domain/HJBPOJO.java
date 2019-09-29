@@ -14,4 +14,6 @@ public class HJBPOJO {
     private int ksdm;
     private int item_id;
     private double je;
+    private int brzt;
+
 }
