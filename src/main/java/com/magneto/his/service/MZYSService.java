@@ -1,7 +1,6 @@
 package com.magneto.his.service;
 
-import com.magneto.his.domain.MZYS_SelectMsgReturnPojo;
-import com.magneto.his.domain.YY_BRXX;
+import com.magneto.his.domain.*;
 
 import java.util.List;
 
@@ -25,4 +24,25 @@ public interface MZYSService {
      * @return  就诊病人列表
      */
     List<YY_BRXX> nowList(Integer deptId);
+
+    /**
+     *  门诊医生主界面双击候诊病人接诊
+     * @param param hjid 和 brzt=1
+     * @return 受影响的行数
+     */
+    Integer updateBRZT(MZYS_UpdateBRZT param);
+
+    /**
+     * 开医嘱保存
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    Integer save(MZYS_SavePOJO params);
+
+    /**
+     * 医生接诊输入卡号或者身份证号查找病人挂号信息
+     * @param params 卡号或者身份证号
+     * @return 病人挂号信息
+     */
+    YY_BRXX selectGHXX(MZGH_MZGHDJParamsPOJO params);
 }

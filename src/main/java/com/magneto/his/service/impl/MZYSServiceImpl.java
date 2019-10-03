@@ -1,7 +1,6 @@
 package com.magneto.his.service.impl;
 
-import com.magneto.his.domain.MZYS_SelectMsgReturnPojo;
-import com.magneto.his.domain.YY_BRXX;
+import com.magneto.his.domain.*;
 import com.magneto.his.mapper.MZYSMapper;
 import com.magneto.his.service.MZYSService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +41,30 @@ public class MZYSServiceImpl implements MZYSService {
     @Override
     public List<YY_BRXX> nowList(Integer deptId) {
         return mzysMapper.nowList(deptId);
+    }
+
+    @Override
+    public Integer updateBRZT(MZYS_UpdateBRZT param) {
+        return mzysMapper.updateBRZT(param);
+    }
+
+    /**
+     * 开医嘱保存
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    @Override
+    public Integer save(MZYS_SavePOJO params) {
+        return mzysMapper.save(params);
+    }
+
+    /**
+     * 医生接诊输入卡号或者身份证号查找病人挂号信息
+     * @param params 卡号或者身份证号
+     * @return 病人挂号信息
+     */
+    @Override
+    public YY_BRXX selectGHXX(MZGH_MZGHDJParamsPOJO params) {
+        return mzysMapper.selectGHXX(params);
     }
 }

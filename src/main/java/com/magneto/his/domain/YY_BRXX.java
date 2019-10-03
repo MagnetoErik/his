@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class YY_BRXX {
 
+    private int hjid;
+    private int ghxx_id;
     private int brxx_id;
     private String brxx_name;
     private int brxx_age;
