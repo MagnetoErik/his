@@ -105,7 +105,6 @@ public class MZGHServiceImpl implements MZGHService {
     public Map<String ,Object> getGHXXList(Integer pageNum) {
         PageHelper.startPage(pageNum,8);
         List<MZGH_GHDJPOJO> ghxx = mzghMapper.getGHXXList();
-
         PageInfo pageInfo = new PageInfo(ghxx);
         Map<String ,Object> map = new HashMap<>();
         map.put("ghxx",ghxx);
@@ -120,5 +119,30 @@ public class MZGHServiceImpl implements MZGHService {
     @Override
     public List<MZGH_GHJBTJPOJO> ghjbtj() {
         return mzghMapper.ghjbtj();
+    }
+
+    /**
+     * 门诊收费页面 通过指定的参数查询收费信息
+     * @param params 参数列表
+     * @return 收费信息
+     */
+    @Override
+    public List<MZGH_MZSFPOJO> getSFXX(MZGH_MZSFPOJO params) {
+        return mzghMapper.getSFXX(params);
+    }
+
+    /**
+     * 门诊收费页面 将病人信息 挂号信息 收费金额写入数据库
+     * @param params 病人信息 挂号信息 收费金额
+     * @return 1 代表成功  0  代表失败
+     */
+    @Override
+    public Integer MZSFinsert(MZGH_MZSFInsertPOJO params) {
+        if(mzghMapper.MZSFinsert(params)==1){
+            return mzghMapper.updateYZZT(params);
+        }
+        else{
+            return 0;
+        }
     }
 }

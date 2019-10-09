@@ -67,4 +67,24 @@ public class MZYSServiceImpl implements MZYSService {
     public YY_BRXX selectGHXX(MZGH_MZGHDJParamsPOJO params) {
         return mzysMapper.selectGHXX(params);
     }
+
+    /**
+     * 开医嘱修改
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    @Override
+    public Integer update(MZYS_SavePOJO params) {
+        return mzysMapper.update(params);
+    }
+
+    /**
+     * 开医嘱删除
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    @Override
+    public Integer delete(MZYS_SavePOJO params) {
+        return mzysMapper.delete(params);
+    }
 }

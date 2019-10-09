@@ -45,4 +45,20 @@ public interface MZYSService {
      * @return 病人挂号信息
      */
     YY_BRXX selectGHXX(MZGH_MZGHDJParamsPOJO params);
+
+
+    /**
+     * 开医嘱修改
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    Integer update(MZYS_SavePOJO params);
+
+
+    /**
+     * 开医嘱删除
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    Integer delete(MZYS_SavePOJO params);
 }

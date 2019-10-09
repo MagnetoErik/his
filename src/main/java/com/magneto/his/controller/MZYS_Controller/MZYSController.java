@@ -60,10 +60,8 @@ public class MZYSController {
     @PostMapping(value = "/save",produces="text/html")
     @ResponseBody
     public String save(@RequestBody  MZYS_SavePOJO params){
-        System.out.println(params);
         return JSON.toJSONString(mzysService.save(params));
     }
-
 
     /**
      * 医生接诊输入卡号或者身份证号查找病人挂号信息
@@ -75,6 +73,38 @@ public class MZYSController {
     public String selectGHXX(MZGH_MZGHDJParamsPOJO params){
         return JSON.toJSONString(mzysService.selectGHXX(params));
     }
+
+
+
+    /**
+     * 开医嘱修改
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    @PostMapping(value = "/update",produces="text/html")
+    @ResponseBody
+    public String update(@RequestBody  MZYS_SavePOJO params){
+        return JSON.toJSONString(mzysService.update(params));
+    }
+
+
+    /**
+     * 开医嘱删除
+     * @param params  参数列表
+     * @return  受影响的行数
+     */
+    @PostMapping(value = "/delete",produces="text/html")
+    @ResponseBody
+    public String delete(MZYS_SavePOJO params){
+        return JSON.toJSONString(mzysService.delete(params));
+    }
+
+
+
+
+
+
+
 
 
 

@@ -11,7 +11,7 @@
 
 
     <select id="waitList" resultType="com.magneto.his.domain.YY_BRXX">
-        select hjid,b.brxx_name,brxx_sex,brxx_age,brxx_phone from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id where ghbz = 1 and ksdm = #{deptId} and brzt = 0
+        select hjid,a.brxx_id,ghxx_id,b.brxx_name,brxx_sex,brxx_age,brxx_phone from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id where ghbz = 1 and ksdm = #{deptId} and brzt = 0
     </select>
 
 
@@ -24,12 +24,14 @@
         update mz_hjb set brzt = #{bz} where hjid = #{hjid}
     </update>
 
+
     <insert id="save">
       insert into mz_cfb values(DEFAULT,#{brxx_id},#{ghxx_id},#{kzsj},#{ggid},#{jl},#{dw},#{pc},#{yf},#{ts},#{dj},#{zje},'已保存')
     </insert>
 
     <select id="selectGHXX" resultType="com.magneto.his.domain.YY_BRXX">
-      select a.brxx_id,ghxx_id,brxx_name,brxx_sex,brxx_age,brxx_phone from mz_ghxx a left join yy_brxx b on a.brxx_id = b.brxx_id left join yy_kdjb c on b.brxx_id = c.brxx_id
+        select a.brxx_id,ghxx_id,brxx_name,brxx_sex,brxx_age,brxx_phone from mz_ghxx a left join yy_brxx b on a.brxx_id
+        = b.brxx_id left join yy_kdjb c on b.brxx_id = c.brxx_id
         <where>
             <if test="brxx_idCard != null and brxx_idCard != ''">
                 and brxx_idCard = #{brxx_idCard}
@@ -40,6 +42,16 @@
         </where>
         order by c.registrationTime desc limit 0,1
     </select>
+
+
+    <update id="update">
+        update mz_cfb set kzsj = #{kzsj},jl=#{jl},pc=#{pc},yf=#{yf},ts=#{ts},zje = #{zje} where brxx_id = #{brxx_id} and ghxx_id = #{ghxx_id} and ggid = #{ggid}
+    </update>
+
+
+    <delete id="delete">
+        delete from mz_cfb where brxx_id = #{brxx_id} and ghxx_id = #{ghxx_id} and ggid = #{ggid}
+    </delete>
 
 
 </mapper>

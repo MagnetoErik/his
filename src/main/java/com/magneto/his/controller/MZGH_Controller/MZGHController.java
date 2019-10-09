@@ -5,13 +5,11 @@ import com.magneto.his.domain.*;
 import com.magneto.his.service.MZGHService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class MZGHController {
@@ -51,11 +49,11 @@ public class MZGHController {
      */
     @PostMapping(value = "/selectByParams",produces="text/html")
     @ResponseBody
-    public String selectByParams(SelectByParamsPOJO params,String pageNum){
+    public String selectByParams(SelectByParamsPOJO params,Integer pageNum){
         if(pageNum==null){
-            pageNum="1";
+            pageNum=1;
         }
-        return JSON.toJSONString(mzghService.selectByParams(params,Integer.parseInt(pageNum)));
+        return JSON.toJSONString(mzghService.selectByParams(params,pageNum));
     }
 
     /**
@@ -113,7 +111,8 @@ public class MZGHController {
      */
     @PostMapping(value = "/getGHXXList",produces="text/html")
     @ResponseBody
-    public String getGHXXList(Integer pageNum){
+    public String getGHXXList(@RequestBody Map map){
+        Integer pageNum = (Integer) map.get("pageNum");
         if(pageNum==null){
             pageNum=1;
         }
@@ -129,6 +128,31 @@ public class MZGHController {
     public String ghjbtj(){
         return JSON.toJSONString(mzghService.ghjbtj());
     }
+
+
+    /**
+     * 门诊收费页面 通过指定的参数查询收费信息
+     * @param params 参数列表
+     * @return 收费信息
+     */
+    @PostMapping(value = "/getSFXX",produces="text/html")
+    @ResponseBody
+    public String getSFXX(@RequestBody MZGH_MZSFPOJO params){
+        return JSON.toJSONString(mzghService.getSFXX(params));
+    }
+
+
+    /**
+     * 门诊收费页面 将病人信息 挂号信息 收费金额写入数据库
+     * @param params 病人信息 挂号信息 收费金额
+     * @return 1 代表成功  0  代表失败
+     */
+    @PostMapping(value = "/MZSFinsert",produces="text/html")
+    @ResponseBody
+    public String MZSFinsert(@RequestBody MZGH_MZSFInsertPOJO params){
+        return JSON.toJSONString(mzghService.MZSFinsert(params));
+    }
+
 
 
 }

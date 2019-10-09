@@ -35,11 +35,11 @@ public class PagesController {
             case 3:
                 return "/pages/mzhs/mzhs";
             case 4:
-                return "/pages/yjgl/yjgl";
+                return "/pages/yj/yj";
             case 5:
-                return "/pages/yfgl/yfgl";
+                return "/pages/yf/yf";
             case 6:
-                return "/pages/jcsj/jcsj";
+                return "/pages/jc/jc";
             default:
                 return null;
         }

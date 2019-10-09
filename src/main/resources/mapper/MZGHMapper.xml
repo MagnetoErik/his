@@ -8,6 +8,7 @@
     </insert>
 
 
+
     <select id="getCardCode" resultType="java.lang.Integer">
       select max(CardCode) from yy_kdjb
     </select>
@@ -32,24 +33,24 @@
 
 
     <select id="selectByParams" resultMap="brxxMap">
-      select cardCode,brxx_name,brxx_sex,brxx_phone,brxx_birth,brxx_address from yy_brxx a join yy_kdjb b on a.brxx_id = b.brxx_id
-      <where>
-          <if test="Brxx_Card != null and Brxx_Card != ''">
-              and cardCode like concat("%",#{Brxx_Card} ,"%")
-          </if>
-          <if test="Brxx_Name != null and Brxx_Name != ''">
-              and brxx_name like concat("%",#{Brxx_Name} ,"%")
-          </if>
-          <if test="Brxx_Phone != null and Brxx_Phone != ''">
-              and Brxx_Phone like concat("%",#{Brxx_Phone} ,"%")
-          </if>
-          <if test="Card_End_registrationTime != null and Card_End_registrationTime != '' and Card_Start_registrationTime != null and Card_Start_registrationTime != '' ">
-              and registrationTime between #{Card_Start_registrationTime} and #{Card_End_registrationTime}
-          </if>
-          <if test="Brxx_End_Birth != null and Brxx_End_Birth != '' and Brxx_Start_Birth != null and Brxx_Start_Birth != '' ">
-              and brxx_birth between #{Brxx_Start_Birth} and #{Brxx_End_Birth}
-          </if>
-      </where>
+        select cardCode,brxx_name,brxx_sex,brxx_phone,brxx_birth,brxx_address from yy_brxx a join yy_kdjb b on a.brxx_id = b.brxx_id
+        <where>
+            <if test="Brxx_Card != null and Brxx_Card != ''">
+                and cardCode like concat("%",#{Brxx_Card} ,"%")
+            </if>
+            <if test="Brxx_Name != null and Brxx_Name != ''">
+                and brxx_name like concat("%",#{Brxx_Name} ,"%")
+            </if>
+            <if test="Brxx_Phone != null and Brxx_Phone != ''">
+                and Brxx_Phone like concat("%",#{Brxx_Phone} ,"%")
+            </if>
+            <if test="Card_End_registrationTime != null and Card_End_registrationTime != '' and Card_Start_registrationTime != null and Card_Start_registrationTime != '' ">
+                and registrationTime between #{Card_Start_registrationTime} and #{Card_End_registrationTime}
+            </if>
+            <if test="Brxx_End_Birth != null and Brxx_End_Birth != '' and Brxx_Start_Birth != null and Brxx_Start_Birth != '' ">
+                and brxx_birth between #{Brxx_Start_Birth} and #{Brxx_End_Birth}
+            </if>
+        </where>
         order by cardCode desc
     </select>
 
@@ -93,6 +94,7 @@
     </insert>
 
 
+
     <select id="getGHXXList" resultType="com.magneto.his.domain.MZGH_GHDJPOJO">
             select c.CardCode cardCode ,b.brxx_name,fun_getDeptName(a.ksdm) deptName,a.je from mz_hjb a left join yy_brxx b on a.brxx_id = b.brxx_id left join yy_kdjb c on a.brxx_id = c.brxx_id order by a.hjsj desc
     </select>
@@ -100,6 +102,34 @@
     <select id="ghjbtj" resultType="com.magneto.his.domain.MZGH_GHJBTJPOJO">
       select b.item_name name,count(1) as value from mz_hjb a left join jc_hsitem b on a.item_id = b.item_id where ghbz = 1 GROUP BY b.item_id
     </select>
+
+    <select id="getSFXX" resultType="com.magneto.his.domain.MZGH_MZSFPOJO">
+        select (@i := @i + 1) AS id,c.CardCode cardCode,d.brxx_id,d.brxx_idCard,a.ghxx_id,d.brxx_name,d.brxx_phone,d.brxx_address,b.yppm,a.jl,a.dw,a.pc,a.yf,b.ypgg,a.dj,a.zje,b.sccj,fun_getDeptName(b.zxks) zxks from mz_cfb a left join yf_ypxx b on a.ggid = b.ggid left join yy_brxx d on a.brxx_id = d.brxx_id left join yy_kdjb c on a.brxx_id = c.brxx_id, (SELECT @i := 0) AS it
+        <where>
+            <if test="cardCode != null and cardCode != ''">
+                and cardCode = #{cardCode}
+            </if>
+            <if test="brxx_idCard != null and brxx_idCard != ''">
+                and brxx_idCard = #{brxx_idCard}
+            </if>
+            <if test="ghxx_id != null and ghxx_id != ''">
+                and ghxx_id = #{ghxx_id}
+            </if>
+            and yzzt like '%已保存%'
+        </where>
+
+
+    </select>
+
+
+    <insert id="MZSFinsert">
+        insert into mz_fpb values(default,#{brxx_id},#{ghxx_id},#{sum})
+    </insert>
+
+
+    <update id="updateYZZT">
+        update mz_cfb set yzzt = '已收费' where brxx_id = #{brxx_id} and ghxx_id = #{ghxx_id} and yzzt like '%已保存%'
+    </update>
 
 
 </mapper>

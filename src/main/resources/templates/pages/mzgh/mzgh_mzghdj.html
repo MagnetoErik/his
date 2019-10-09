@@ -8,11 +8,6 @@
     <script type="text/javascript" src="../../js/bootstrap.js"></script>
     <script type="text/javascript" src="../../js/Vue.js"></script>
     <script type="text/javascript" src="../../js/axios.js"></script>
-    <style>
-        [v-clock]{
-            display:none;
-        }
-    </style>
     <script>
         function f1(event) {
             var e = event || window.event;
@@ -79,7 +74,7 @@
     </script>
 </head>
 <body>
-<div id="main" v-clock>
+<div id="main">
     <form class="form-inline" style="margin-top: 1%;height: 50px;">
         <div class="col-md-7">
             <input type="hidden" id="brxx_id">
@@ -130,9 +125,7 @@
             <div class="form-group" style="margin-top: 3%;margin-left: 3%">
                 <input type="button" onclick="guahao()" class="btn btn-primary" value="挂号">
                 <!-- Button trigger modal -->
-                <button style="display: none" type="button" id="modelBtn"
-                        data-toggle="modal"
-                        data-target="#myModal">
+                <button style="display: none" type="button" id="modelBtn" data-toggle="modal" data-target="#myModal">
                 </button>
                 <input type="reset" id="delete" class="btn btn-warning" style="margin-left: 20px" value="重置">
             </div>

@@ -69,10 +69,6 @@
     ;
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
-        myChart.on('click', function (param) {
-            var url = param.data.url;
-            window.location.href = url;
-        });
     }
 
 

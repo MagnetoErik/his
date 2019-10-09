@@ -68,4 +68,19 @@ public interface MZGHService {
      * @return
      */
     List<MZGH_GHJBTJPOJO> ghjbtj();
+
+    /**
+     * 门诊收费页面 通过指定的参数查询收费信息
+     * @param params 参数列表
+     * @return 收费信息
+     */
+    List<MZGH_MZSFPOJO> getSFXX(MZGH_MZSFPOJO params);
+
+
+    /**
+     * 门诊收费页面 将病人信息 挂号信息 收费金额写入数据库
+     * @param params 病人信息 挂号信息 收费金额
+     * @return 1 代表成功  0  代表失败
+     */
+    Integer MZSFinsert(MZGH_MZSFInsertPOJO params);
 }
