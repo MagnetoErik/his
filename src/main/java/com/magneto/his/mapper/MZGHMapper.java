@@ -2,6 +2,7 @@ package com.magneto.his.mapper;
 
 import com.magneto.his.domain.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -98,4 +99,19 @@ public interface MZGHMapper {
      */
     Integer updateYZZT(MZGH_MZSFInsertPOJO params);
 
+    /**
+     *  门诊收费页面   门诊退号退卡
+     * @param cardCode 卡号
+     * @param brxx_idCard  身份证号
+     * @return  受影响的行数
+     */
+    Integer th(@Param("cardCode") Integer cardCode,@Param("brxx_idCard") String brxx_idCard);
+
+
+    /**
+     *门诊收费页面   门诊退费
+     * @param params 病人信息id  挂号信息id
+     * @return 受影响的行数
+     */
+    Integer tf(MZGH_MZSFInsertPOJO params);
 }

@@ -33,6 +33,14 @@
                 $("#main").attr("src",'/mzgh/mzgh_ghjbtj');
             }
 
+            function mzth() {
+                $("#main").attr("src",'/mzgh/mzgh_mzth');
+            }
+
+            function mztf() {
+                $("#main").attr("src",'/mzgh/mzgh_mztf');
+            }
+
             window.onload = function (){
                 $.ajax({
                     type:'get',
@@ -119,6 +127,14 @@
 								<li><a href="#" onclick="ghjbtj()">挂号级别统计</a></li>
 							</ul>
 					</li>
+                    <li class=" dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多功能
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="mzth()">门诊退号退卡</a></li>
+                            <li><a href="#" onclick="mztf()">门诊退费</a></li>
+                        </ul>
+                    </li>
 				</ul>
 <input type="hidden" id="username">
 				<ul class="nav navbar-nav navbar-right">

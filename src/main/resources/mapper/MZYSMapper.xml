@@ -26,7 +26,7 @@
 
 
     <insert id="save">
-      insert into mz_cfb values(DEFAULT,#{brxx_id},#{ghxx_id},#{kzsj},#{ggid},#{jl},#{dw},#{pc},#{yf},#{ts},#{dj},#{zje},'已保存')
+      insert into mz_cfb values(DEFAULT,#{brxx_id},#{ghxx_id},#{kzsj},#{ggid},#{jl},#{dw},#{pc},#{yf},#{ts},#{dj},#{zje},'未收费')
     </insert>
 
     <select id="selectGHXX" resultType="com.magneto.his.domain.YY_BRXX">

@@ -154,5 +154,35 @@ public class MZGHController {
     }
 
 
+    /**
+     *  门诊收费页面   门诊退号退卡
+     * @param cardCode 卡号
+     * @param brxx_idCard  身份证号
+     * @return  受影响的行数
+     */
+    @GetMapping(value = "/th",produces="text/html")
+    @ResponseBody
+    public String th(Integer cardCode,String brxx_idCard){
+        System.out.println(cardCode+"-------"+brxx_idCard);
+        return JSON.toJSONString(mzghService.th(cardCode,brxx_idCard));
+    }
+
+
+
+    /**
+     *门诊收费页面   门诊退费
+     * @param params 病人信息id  挂号信息id
+     * @return 受影响的行数
+     */
+    @PostMapping(value = "/tf",produces="text/html")
+    @ResponseBody
+    public String tf(@RequestBody MZGH_MZSFInsertPOJO params){
+        return JSON.toJSONString(mzghService.tf(params));
+    }
+
+
+
+
+
 
 }

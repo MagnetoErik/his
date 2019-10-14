@@ -8,7 +8,6 @@
     </insert>
 
 
-
     <select id="getCardCode" resultType="java.lang.Integer">
       select max(CardCode) from yy_kdjb
     </select>
@@ -115,21 +114,30 @@
             <if test="ghxx_id != null and ghxx_id != ''">
                 and ghxx_id = #{ghxx_id}
             </if>
-            and yzzt like '%已保存%'
+            and yzzt like concat("%",#{yzzt},"%")
         </where>
-
-
     </select>
 
 
     <insert id="MZSFinsert">
-        insert into mz_fpb values(default,#{brxx_id},#{ghxx_id},#{sum})
+        insert into mz_fpb values(default,#{brxx_id},#{ghxx_id},#{sum},now())
     </insert>
 
 
     <update id="updateYZZT">
-        update mz_cfb set yzzt = '已收费' where brxx_id = #{brxx_id} and ghxx_id = #{ghxx_id} and yzzt like '%已保存%'
+        update mz_cfb set yzzt = '已收费' where brxx_id = #{brxx_id} and ghxx_id = #{ghxx_id} and yzzt like '%未收费%'
     </update>
+
+
+
+    <delete id="th">
+        delete a,b from yy_brxx a,yy_kdjb b where a.brxx_id = b.brxx_id and b.CardCode = #{cardCode} and a.brxx_idCard = #{brxx_idCard}
+    </delete>
+
+
+    <delete id="tf">
+        delete from mz_cfb where ghxx_id = #{ghxx_id} and brxx_id = #{brxx_id}
+    </delete>
 
 
 </mapper>

@@ -27,11 +27,12 @@ public class MZGH_MZSFPOJO {
     private Double zje;//总金额
     private String sccj;//生产厂家
     private String zxks;//执行科室
+    private String yzzt;
 
     public MZGH_MZSFPOJO() {
     }
 
-    public MZGH_MZSFPOJO(Integer id, Integer cardCode, String brxx_idCard, Integer brxx_id, Integer ghxx_id, String brxx_name, String brxx_phone, String brxx_address, String yppm, Integer jl, String dw, Integer pc, String yf, String ypgg, Double dj, Double zje, String sccj, String zxks) {
+    public MZGH_MZSFPOJO(Integer id, Integer cardCode, String brxx_idCard, Integer brxx_id, Integer ghxx_id, String brxx_name, String brxx_phone, String brxx_address, String yppm, Integer jl, String dw, Integer pc, String yf, String ypgg, Double dj, Double zje, String sccj, String zxks, String yzzt) {
         this.id = id;
         this.cardCode = cardCode;
         this.brxx_idCard = brxx_idCard;
@@ -50,5 +51,6 @@ public class MZGH_MZSFPOJO {
         this.zje = zje;
         this.sccj = sccj;
         this.zxks = zxks;
+        this.yzzt = yzzt;
     }
 }

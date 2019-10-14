@@ -8,13 +8,14 @@
     <script>
         $.ajax({
             type:'post',
-            url:'/ghjbtj',
+            url:'/yf/srtj',
             data:{},
             success:function (str) {
                 var jsonStr = JSON.parse(str);
                 var nameData = new Array();
                 var valueData = new Array();
                 $.each(jsonStr,function (index,bean) {
+                    console.log(bean)
                     nameData.push(bean.name);
                     valueData.push(bean);
                 });
@@ -26,7 +27,7 @@
                     },
                     series: [
                         {
-                            name: '挂号等级：人数（占比）',
+                            name: '药品品名：总收入（占比）',
                             type: 'pie',
                             radius: '65%',
                             center: ['50%', '60%'],

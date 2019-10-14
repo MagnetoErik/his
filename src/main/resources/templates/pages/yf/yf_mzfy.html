@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../../css/bootstrap.css"/>
+    <script type="text/javascript" src="../../js/jQuery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/Vue.js"></script>
+    <script type="text/javascript" src="../../js/axios.js"></script>
+</head>
+<body>
+<div id="main">
+    <form>
+        <div style="height: 85px;">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label style="margin-left: 5%">卡号：</label>
+                        <input type="number" id="cardCode" class="form-control">
+                        <label>身份证号：</label>
+                        <input type="number" id="brxx_idCard" class="form-control">
+                        <label>门诊号：</label>
+                        <input type="number" id="ghxx_id" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label style="margin-left: 5%">姓名：</label>
+                        <input type="text" id="brxx_name" class="form-control" readonly="readonly">
+                        <label>联系方式：</label>
+                        <input type="text" id="brxx_phone" class="form-control" readonly="readonly">
+                        <label>现住址：</label>
+                        <input type="text" id="brxx_address" class="form-control" readonly="readonly">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" style="height: 100%;margin-left: -5%;">
+                <input type="button" value="查询" @click="getTYXX()" style="width: 30%;height: 100%"
+                       class="btn btn-default"/>
+                <input type="button" value="发药" @click="fy()" style="width: 30%;height: 100%" class="btn btn-primary"/>
+                <input type="reset" @click="clearAll()" value="清空" style="width: 30%;height: 100%"
+                       class="btn btn-warning"/>
+            </div>
+
+        </div>
+
+        <div style="width: 100%; height: 300px;">
+            <table class="table table-striped" id="msg">
+                <tr align="center">
+                    <td>序号</td>
+                    <td>医嘱名称</td>
+                    <td>剂量</td>
+                    <td>频次</td>
+                    <td>用法</td>
+                    <td>规格</td>
+                    <td>单价</td>
+                    <td>金额</td>
+                    <td>厂家</td>
+                    <td>领药科室</td>
+                </tr>
+                <tr align="center" v-for="(bean) in TYXXList">
+                    <td>{{bean.id}}</td>
+                    <td>{{bean.yppm}}</td>
+                    <td>一次{{bean.jl}}{{bean.dw}}</td>
+                    <td>一天{{bean.pc}}次</td>
+                    <td>{{bean.yf}}</td>
+                    <td>{{bean.ypgg}}</td>
+                    <td>{{bean.dj}}元</td>
+                    <td>{{bean.zje}}元</td>
+                    <td>{{bean.sccj}}</td>
+                    <td>{{bean.zxks}}</td>
+                </tr>
+
+            </table>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var vm = new Vue({
+        el: '#main',
+        data: {
+            TYXXList: [],
+
+        },
+        methods: {
+            getTYXX: function () {
+                var data = {
+                    cardCode:$("#cardCode").val(),
+                    brxx_idCard: $("#brxx_idCard").val(),
+                    ghxx_id: $("#ghxx_id").val(),
+                    yzzt:'已收费',
+                };
+
+                if ((data.cardCode != null && data.cardCode != '') || (data.brxx_idCard != null && data.brxx_idCard != '') || (data.ghxx_id != null && data.ghxx_id != '')) {
+                    axios.post('/yf/getFYXX', data).then(function (res) {
+                        if (res.data.length != 0) {
+                            vm.TYXXList = res.data;
+                            document.getElementById("cardCode").value = res.data[0].cardCode;
+                            document.getElementById("brxx_idCard").value = res.data[0].brxx_idCard;
+                            document.getElementById("ghxx_id").value = res.data[0].ghxx_id;
+                            document.getElementById("brxx_name").value = res.data[0].brxx_name;
+                            document.getElementById("brxx_phone").value = res.data[0].brxx_phone;
+                            document.getElementById("brxx_address").value = res.data[0].brxx_address;
+                        } else {
+                            alert("该病人没有可发药的项目！");
+                            return;
+                        }
+                    })
+                } else {
+                    alert("请输入查询条件！");
+                    return;
+                }
+
+            },
+            fy: function () {
+                var brxx_name = $("#brxx_name").val();
+                if (brxx_name != null && brxx_name != '') {
+                    this.$options.methods.insert();
+                } else {
+                    alert("请先选定病人后再进行发药！");
+                    return;
+                }
+            },
+            insert: function () {
+                var data = {
+                    brxx_id: vm.TYXXList[0].brxx_id,
+                    ghxx_id: vm.TYXXList[0].ghxx_id,
+                }
+                axios.post('/yf/fy',data).then(function(res){
+                    if(res.data > 0){
+                        alert("发药成功！");
+                        vm.$options.methods.clearAll();
+                    }else{
+                        alert("发药失败！请联系管理员！");
+                    }
+                })
+            },
+            clearAll(){
+                location.reload()
+            }
+            //methods final
+        }
+    })
+</script>

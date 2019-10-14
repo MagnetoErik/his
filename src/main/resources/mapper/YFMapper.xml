@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.magneto.his.mapper.YFMapper">
+
+    <select id="fy"  statementType="CALLABLE" resultType="java.lang.Integer">
+      {call pro_fy(
+	        #{brxx_id,mode=IN,jdbcType=INTEGER},
+	        #{ghxx_id,mode=IN,jdbcType=INTEGER}
+	    )}
+    </select>
+
+    <select id="ty"  statementType="CALLABLE" resultType="java.lang.Integer">
+      {call pro_ty(
+	        #{brxx_id,mode=IN,jdbcType=INTEGER},
+	        #{ghxx_id,mode=IN,jdbcType=INTEGER}
+	    )}
+    </select>
+
+
+    <select id="srtj" resultType="com.magneto.his.domain.MZGH_GHJBTJPOJO">
+      select b.yppm name,sum(zje) as value from mz_cfb a left join yf_ypxx b on a.ggid = b.ggid where yzzt like '%已发药%' and zxks = 6 GROUP BY yppm ORDER BY zje desc
+    </select>
+</mapper>

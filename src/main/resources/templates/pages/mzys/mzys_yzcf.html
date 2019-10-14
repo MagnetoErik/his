@@ -231,12 +231,12 @@
                         success: function (res) {
                             if (JSON.parse(res) == 1) {
                                 alert("保存成功!");
-                                document.getElementById("yzzt" + i).value = "已保存";
+                                document.getElementById("yzzt" + i).value = "未收费";
                             }
                         }
                     });
                     break;
-                case "已保存":
+                case "未收费":
                     if (confirm("您确定要修改已保存的医嘱吗？")) {
                         data.push({
                             brxx_id: $("#brxx_id").val(),
@@ -259,7 +259,7 @@
                             success: function (res) {
                                 if (JSON.parse(res) == 1) {
                                     alert("修改成功!");
-                                    document.getElementById("yzzt" + i).value = "已保存";
+                                    document.getElementById("yzzt" + i).value = "未收费";
                                 }
                             }
                         });
@@ -325,7 +325,6 @@
                 <div style="margin-top: 5%;">
                     <ul class="nav nav-tabs">
                         <li role="presentation"><a href="#" @click="now()">就诊病人列表</a></li>
-                        <li role="presentation"><a href="#" @click="finish()">就诊完成列表</a></li>
                     </ul>
                 </div>
                 <div style="height: 200px;overflow :auto;margin-top: 2%;margin: 0px;padding: 0px;">
@@ -441,13 +440,14 @@
         },
         methods: {
             now: function () {
-                alert(1);
-            },
-            finish: function () {
-                alert(2);
+                axios.post('/mzys/nowList').then(function (res) {
+                    vm.nowList = res.data;
+                });
             },
             refresh: function () {
-                alert(3);
+                axios.post('/mzys/waitList').then(function (res) {
+                    vm.waitList = res.data;
+                });
             },
             getMsg: function () {
                 var name = $("#selectInput").val();

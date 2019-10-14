@@ -13,14 +13,16 @@ public class MZGH_MZSFInsertPOJO {
     private Integer brxx_id;
     private Integer ghxx_id;
     private Double sum;
+    private String yzzt;
 
     public MZGH_MZSFInsertPOJO() {
     }
 
-    public MZGH_MZSFInsertPOJO(Integer fp_id, Integer brxx_id, Integer ghxx_id, Double sum) {
+    public MZGH_MZSFInsertPOJO(Integer fp_id, Integer brxx_id, Integer ghxx_id, Double sum, String yzzt) {
         this.fp_id = fp_id;
         this.brxx_id = brxx_id;
         this.ghxx_id = ghxx_id;
         this.sum = sum;
+        this.yzzt = yzzt;
     }
 }

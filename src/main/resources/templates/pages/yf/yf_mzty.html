@@ -16,10 +16,6 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <div class="form-inline">
-                        <label>
-                            <input type="radio" name="options" id="option1" value="未收费" checked>
-                            未收费
-                        </label>
                         <label style="margin-left: 5%">卡号：</label>
                         <input type="number" id="cardCode" class="form-control">
                         <label>身份证号：</label>
@@ -30,10 +26,6 @@
                 </div>
                 <div class="form-group">
                     <div class="form-inline">
-                        <label>
-                            <input type="radio" name="options" id="option2" value="已收费">
-                            已收费
-                        </label>
                         <label style="margin-left: 5%">姓名：</label>
                         <input type="text" id="brxx_name" class="form-control" readonly="readonly">
                         <label>联系方式：</label>
@@ -44,11 +36,10 @@
                 </div>
             </div>
             <div class="col-md-3" style="height: 100%;margin-left: -5%;">
-                <input type="button" value="查询" @click="getSFXX()" style="width: 30%;height: 100%"
+                <input type="button" value="查询" @click="getTYXX()" style="width: 30%;height: 100%"
                        class="btn btn-default"/>
-                <input type="button" value="收费" @click="sf()" style="width: 30%;height: 100%" class="btn btn-primary"/>
-                <input type="button" id="modelBtn" style="display: none" data-toggle="modal" data-target="#myModal">
-                <input type="reset" @click="clearAll()" value="刷新" style="width: 30%;height: 100%"
+                <input type="button" value="退药" @click="ty()" style="width: 30%;height: 100%" class="btn btn-primary"/>
+                <input type="reset" @click="clearAll()" value="清空" style="width: 30%;height: 100%"
                        class="btn btn-warning"/>
             </div>
 
@@ -65,59 +56,25 @@
                     <td>规格</td>
                     <td>单价</td>
                     <td>金额</td>
-                    <td>执行科室</td>
+                    <td>厂家</td>
+                    <td>领药科室</td>
                 </tr>
-                <tr align="center" v-for="(bean) in SFXXList">
+                <tr align="center" v-for="(bean) in TYXXList">
                     <td>{{bean.id}}</td>
                     <td>{{bean.yppm}}</td>
                     <td>一次{{bean.jl}}{{bean.dw}}</td>
                     <td>一天{{bean.pc}}次</td>
                     <td>{{bean.yf}}</td>
                     <td>{{bean.ypgg}}</td>
-                    <td>{{bean.dj | numFilter}}元</td>
-                    <td>{{bean.zje | numFilter}}元</td>
+                    <td>{{bean.dj}}元</td>
+                    <td>{{bean.zje}}元</td>
+                    <td>{{bean.sccj}}</td>
                     <td>{{bean.zxks}}</td>
-                </tr>
-                <tr align='center'>
-                    <td colspan='7'></td>
-                    <td>共计：{{sum}}元</td>
-                    <td colspan='2'></td>
                 </tr>
 
             </table>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">门诊挂号登记</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-6">
-                            <label>应收金额</label>
-                            <input type="text" readonly="readonly" v-model="sum" id="money1"
-                                   class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label>实收金额</label>
-                            <input type="text" id="money2" v-model="money2" class="form-control">
-                        </div>
-                        <div class="col-md-6 col-md-offset-6" style="margin-top: 1%">
-                            <label>找零金额</label>
-                            <span type="text" style="width: 100%;" id="money3" class="form-control">{{money2-sum | numFilter}}</span>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="margin-top: 20%;">
-                        <button type="button" style="width: 49%" @click="insert()" class="btn btn-primary">收费
-                        </button>
-                        <button type="reset" id="clear" style="width: 49%" class="btn btn-warning">重置</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </form>
 </div>
 </body>
@@ -126,36 +83,32 @@
     var vm = new Vue({
         el: '#main',
         data: {
-            SFXXList: [],
+            TYXXList: [],
             sum: 0,
             money3: 0,
             money2: 0
         },
         methods: {
-            getSFXX: function () {
+            getTYXX: function () {
                 var data = {
                     cardCode: $("#cardCode").val(),
                     brxx_idCard: $("#brxx_idCard").val(),
                     ghxx_id: $("#ghxx_id").val(),
-                    yzzt:$(':radio[name="options"]:checked').val()
+                    yzzt:'已发药',
                 };
 
                 if ((data.cardCode != null && data.cardCode != '') || (data.brxx_idCard != null && data.brxx_idCard != '') || (data.ghxx_id != null && data.ghxx_id != '')) {
                     axios.post('/getSFXX', data).then(function (res) {
                         if (res.data.length != 0) {
-                            vm.SFXXList = res.data;
+                            vm.TYXXList = res.data;
                             document.getElementById("cardCode").value = res.data[0].cardCode;
                             document.getElementById("brxx_idCard").value = res.data[0].brxx_idCard;
                             document.getElementById("ghxx_id").value = res.data[0].ghxx_id;
                             document.getElementById("brxx_name").value = res.data[0].brxx_name;
                             document.getElementById("brxx_phone").value = res.data[0].brxx_phone;
                             document.getElementById("brxx_address").value = res.data[0].brxx_address;
-                            vm.sum = 0;
-                            for (var i = 0; i < res.data.length; i++) {
-                                vm.sum += res.data[i].zje.toFixed(2);
-                            }
                         } else {
-                            alert("该病人没有可收费的项目！");
+                            alert("该病人没有可退药的项目！");
                             return;
                         }
                     })
@@ -165,44 +118,34 @@
                 }
 
             },
-            sf: function () {
+            ty: function () {
                 var brxx_name = $("#brxx_name").val();
                 if (brxx_name != null && brxx_name != '') {
-                    $("#modelBtn").click();
+                    vm.$options.methods.insert();
                 } else {
-                    alert("请先选定病人后再进行收费！");
+                    alert("请先选定病人后再进行退药！");
                     return;
                 }
             },
             insert: function () {
                 var data = {
-                    sum: vm.sum,
-                    brxx_id: vm.SFXXList[0].brxx_id,
-                    ghxx_id: vm.SFXXList[0].ghxx_id,
+                    brxx_id: vm.TYXXList[0].brxx_id,
+                    ghxx_id: vm.TYXXList[0].ghxx_id,
                 }
-                axios.post('/MZSFinsert',data).then(function(res){
-                    if(res.data = 1){
-                        alert("收费成功！");
-                        $("#modelBtn").click();
-                        $("#clear").click();
-                        vm.sum = 0;
-                        vm.SFXXList = []
+                axios.post('/yf/ty',data).then(function(res){
+                    if(res.data > 0){
+                        alert("退药成功！");
+                        vm.$options.methods.clearAll();
+                    }else{
+                        alert("退药失败！请联系管理员！");
                     }
                 })
             },
             clearAll(){
-                location.reload();
+                location.reload()
 
             }
             //methods final
-        },
-
-        filters: {
-            numFilter(value) {
-                // 截取当前数据到小数点后两位
-                let realVal = parseFloat(value).toFixed(2)
-                return realVal
-            }
         }
     })
 </script>

@@ -54,5 +54,23 @@ public class MZGHPageController {
         return "/pages/mzgh/mzgh_ghjbtj";
     }
 
+    /**
+     * 跳转到门诊退号页面
+     * @return
+     */
+    @GetMapping(value = "/mzgh_mzth", produces = "text/html")
+    public String mzgh_mzth() {
+        return "/pages/mzgh/mzgh_mzth";
+    }
+
+    /**
+     * 跳转到门诊退费页面
+     * @return
+     */
+    @GetMapping(value = "/mzgh_mztf", produces = "text/html")
+    public String mzgh_mztf() {
+        return "/pages/mzgh/mzgh_mztf";
+    }
+
 
 }

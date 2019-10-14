@@ -145,4 +145,25 @@ public class MZGHServiceImpl implements MZGHService {
             return 0;
         }
     }
+
+    /**
+     *  门诊收费页面   门诊退号退卡
+     * @param cardCode 卡号
+     * @param brxx_idCard  身份证号
+     * @return  受影响的行数
+     */
+    @Override
+    public Integer th(Integer cardCode, String brxx_idCard) {
+        return mzghMapper.th(cardCode,brxx_idCard);
+    }
+
+    /**
+     *门诊收费页面   门诊退费
+     * @param params 病人信息id  挂号信息id
+     * @return 受影响的行数
+     */
+    @Override
+    public Integer tf(MZGH_MZSFInsertPOJO params) {
+        return mzghMapper.tf(params);
+    }
 }

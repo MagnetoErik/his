@@ -83,4 +83,21 @@ public interface MZGHService {
      * @return 1 代表成功  0  代表失败
      */
     Integer MZSFinsert(MZGH_MZSFInsertPOJO params);
+
+
+    /**
+     *  门诊收费页面   门诊退号退卡
+     * @param cardCode 卡号
+     * @param brxx_idCard  身份证号
+     * @return  受影响的行数
+     */
+    Integer th(Integer cardCode,String brxx_idCard);
+
+
+    /**
+     *门诊收费页面   门诊退费
+     * @param params 病人信息id  挂号信息id
+     * @return 受影响的行数
+     */
+    Integer tf(MZGH_MZSFInsertPOJO params);
 }

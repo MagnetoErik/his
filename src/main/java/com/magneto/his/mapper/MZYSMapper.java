@@ -65,4 +65,5 @@ public interface MZYSMapper {
      * @return  受影响的行数
      */
     Integer delete(MZYS_SavePOJO params);
+
 }

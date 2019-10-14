@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css"/>
+    <script type="text/javascript" src="../../js/jQuery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script>
+        function f1(event) {
+            var e = event || window.event;
+            if (e && e.keyCode == 13) { // enter 键
+                var cardCode = $("#cardCode").val();
+                var brxx_idCard = $("#brxx_idCard").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/selectBrxx',
+                    data: {cardCode: cardCode, brxx_idCard: brxx_idCard},
+                    cache: false,
+                    success: function (str) {
+                        var jsonStr = JSON.parse(str);
+                        if(jsonStr!=null){
+                            document.getElementById("cardCode").value = jsonStr.yy_kdjb.cardCode;
+                            document.getElementById("brxx_name").value = jsonStr.brxx_name;
+                            document.getElementById("brxx_phone").value = jsonStr.brxx_phone;
+                            document.getElementById("brxx_sex").value = jsonStr.brxx_sex;
+                            document.getElementById("brxx_idCard").value = jsonStr.brxx_idCard;
+                            document.getElementById("brxx_age").value = jsonStr.brxx_age;
+                            document.getElementById("brxx_id").value = jsonStr.brxx_id;
+                        }else{
+                            alert("系统中检索不到您所查询的信息，请重新输入！");
+                        }
+
+                    }
+                })
+            }
+        }
+
+        function empty1() {
+            document.getElementById("brxx_id").value = "";
+            document.getElementById("brxx_name").value = "";
+            document.getElementById("brxx_phone").value = "";
+            document.getElementById("brxx_sex").value = "";
+            document.getElementById("brxx_idCard").value = "";
+            document.getElementById("brxx_age").value = "";
+        }
+
+        function empty2() {
+            document.getElementById("brxx_id").value = "";
+            document.getElementById("brxx_name").value = "";
+            document.getElementById("brxx_phone").value = "";
+            document.getElementById("brxx_sex").value = "";
+            document.getElementById("cardCode").value = "";
+            document.getElementById("brxx_age").value = "";
+        }
+
+        function th() {
+            $.ajax({
+                type: 'get',
+                url: '/th',
+                data: {
+                    cardCode: $("#cardCode").val(),
+                    brxx_idCard:$("#brxx_idCard").val()
+                },
+                success: function (res) {
+                    if (res>0){
+                        alert("操作成功！");
+                        document.getElementById("brxx_id").value = "";
+                        document.getElementById("brxx_name").value = "";
+                        document.getElementById("brxx_phone").value = "";
+                        document.getElementById("brxx_sex").value = "";
+                        document.getElementById("cardCode").value = "";
+                        document.getElementById("brxx_age").value = "";
+                        document.getElementById("brxx_idCard").value = "";
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div id="main">
+    <form>
+        <div class="col-md-4 col-md-offset-4">
+            <input type="hidden" id="brxx_id">
+            <div class="form-group">
+                <label>卡号</label>
+                <input onkeypress="f1(event)" oninput="empty1()" type="number" class="form-control" id="cardCode">
+            </div>
+            <div class="form-group">
+                <label>姓名</label>
+                <input type="text" readonly="readonly" class="form-control" id="brxx_name">
+            </div>
+            <div class="form-group">
+                <label>电话</label>
+                <input type="tel" readonly="readonly" class="form-control" id="brxx_phone">
+            </div>
+            <div class="form-group" style="margin-top: 3%;">
+                <label>性别</label>
+                <input readonly="readonly" type="text" class="form-control" id="brxx_sex">
+            </div>
+            <div class="form-group" style="margin-top: 3%;">
+                <label>身份证号</label>
+                <input type="text" onkeypress="f1(event)" oninput="empty2()" class="form-control" id="brxx_idCard">
+            </div>
+            <div class="form-group" style="margin-top: 3%;">
+                <label>年龄</label>
+                <input type="number" readonly="readonly" min="0" class="form-control" id="brxx_age">
+            </div>
+            <div class="form-group col-md-offset-4" style="margin-top: 3%;">
+                <input type="button" class="btn btn-danger" value="退号" onclick="th()">
+                <input type="reset" style="margin-left: 5%;" class="btn btn-warning" value="重置">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
